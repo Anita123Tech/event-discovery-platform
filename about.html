@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="About Vibent — Our mission to connect people through unforgettable experiences.">
+  <title>About — Vibent</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/darkmode.css">
+  <style>
+    .about-hero-v2 { position:relative; height:420px; display:flex; align-items:center; overflow:hidden; }
+    .about-hero-v2__bg { position:absolute; inset:0; }
+    .about-hero-v2__bg img { width:100%; height:100%; object-fit:cover; }
+    .about-hero-v2__overlay { position:absolute; inset:0; background:linear-gradient(135deg, rgba(28,11,43,0.92) 0%, rgba(217,90,43,0.75) 100%); }
+    .about-hero-v2__content { position:relative; z-index:1; text-align:center; width:100%; }
+    .about-hero-v2__badge { display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,0.15); backdrop-filter:blur(8px); border:1px solid rgba(255,255,255,0.2); padding:8px 18px; border-radius:100px; font-size:13px; font-weight:600; color:#fff; margin-bottom:20px; }
+    .about-hero-v2__title { font-size:44px; font-weight:800; color:#fff; line-height:1.15; margin-bottom:16px; }
+    .about-hero-v2__sub { font-size:17px; color:rgba(255,255,255,0.8); max-width:560px; margin:0 auto; line-height:1.6; }
+
+    .about-stats { display:grid; grid-template-columns:repeat(4,1fr); gap:0; background:var(--bg-white); border-radius:var(--radius-xl); box-shadow:var(--shadow-lg); margin-top:-48px; position:relative; z-index:2; border:1px solid var(--border-light); }
+    .about-stat { text-align:center; padding:32px 20px; border-right:1px solid var(--border-light); }
+    .about-stat:last-child { border-right:none; }
+    .about-stat__number { font-size:36px; font-weight:800; color:var(--primary); line-height:1; margin-bottom:6px; }
+    .about-stat__label { font-size:14px; color:var(--text-secondary); font-weight:500; }
+
+    .about-story { display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center; }
+    .about-story__tag { display:inline-block; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:var(--primary); margin-bottom:12px; }
+    .about-story__title { font-size:30px; font-weight:800; color:var(--text); line-height:1.2; margin-bottom:20px; }
+    .about-story__text { font-size:15px; color:var(--text-secondary); line-height:1.8; margin-bottom:14px; }
+    .about-story__image { border-radius:var(--radius-xl); overflow:hidden; position:relative; }
+    .about-story__image img { width:100%; height:380px; object-fit:cover; display:block; }
+    .about-story__image-badge { position:absolute; bottom:20px; left:20px; background:rgba(255,255,255,0.95); backdrop-filter:blur(8px); padding:12px 20px; border-radius:var(--radius-lg); display:flex; align-items:center; gap:10px; box-shadow:0 4px 20px rgba(0,0,0,0.15); }
+    .about-story__image-badge-icon { width:40px; height:40px; background:var(--primary); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; }
+    .about-story__image-badge-text { font-size:13px; font-weight:700; color:var(--text); }
+    .about-story__image-badge-sub { font-size:11px; color:var(--text-secondary); font-weight:400; }
+
+    .about-values-v2 { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+    .about-value-v2 { background:var(--bg-white); border:1px solid var(--border-light); border-radius:var(--radius-xl); padding:32px 28px; transition:all 0.3s; position:relative; overflow:hidden; }
+    .about-value-v2:hover { transform:translateY(-4px); box-shadow:var(--shadow-lg); border-color:var(--primary); }
+    .about-value-v2::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:var(--primary); transform:scaleX(0); transition:transform 0.3s; transform-origin:left; }
+    .about-value-v2:hover::before { transform:scaleX(1); }
+    .about-value-v2__icon { width:52px; height:52px; border-radius:var(--radius-lg); display:flex; align-items:center; justify-content:center; margin-bottom:18px; }
+    .about-value-v2__icon svg { width:24px; height:24px; }
+    .about-value-v2 h3 { font-size:17px; font-weight:700; color:var(--text); margin-bottom:8px; }
+    .about-value-v2 p { font-size:14px; color:var(--text-secondary); line-height:1.7; }
+
+    .about-team-v2__header { text-align:center; margin-bottom:48px; }
+    .about-team-v2__tag { display:inline-block; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:var(--primary); margin-bottom:10px; }
+    .about-team-v2__title { font-size:32px; font-weight:800; color:var(--text); margin-bottom:10px; }
+    .about-team-v2__sub { font-size:15px; color:var(--text-secondary); max-width:480px; margin:0 auto; }
+
+    .about-team-v2 { display:grid; grid-template-columns:repeat(4,1fr); gap:28px; }
+    .about-team-card { text-align:center; }
+    .about-team-card__image { width:140px; height:140px; border-radius:50%; overflow:hidden; margin:0 auto 16px; border:4px solid var(--bg-white); box-shadow:var(--shadow-md); position:relative; transition:transform 0.3s; }
+    .about-team-card:hover .about-team-card__image { transform:scale(1.05); }
+    .about-team-card__image img { width:100%; height:100%; object-fit:cover; }
+    .about-team-card__name { font-size:16px; font-weight:700; color:var(--text); margin-bottom:2px; }
+    .about-team-card__role { font-size:13px; color:var(--primary); font-weight:600; margin-bottom:12px; }
+    .about-team-card__socials { display:flex; justify-content:center; gap:8px; }
+    .about-team-card__social { width:32px; height:32px; border-radius:50%; border:1px solid var(--border-light); display:flex; align-items:center; justify-content:center; color:var(--text-secondary); transition:all 0.2s; }
+    .about-team-card__social:hover { background:var(--primary); color:#fff; border-color:var(--primary); }
+    .about-team-card__social svg { width:14px; height:14px; }
+
+    .about-cta { position:relative; border-radius:var(--radius-xl); overflow:hidden; padding:64px 48px; text-align:center; }
+    .about-cta__bg { position:absolute; inset:0; }
+    .about-cta__bg img { width:100%; height:100%; object-fit:cover; }
+    .about-cta__overlay { position:absolute; inset:0; background:linear-gradient(135deg, rgba(28,11,43,0.9) 0%, rgba(217,90,43,0.85) 100%); }
+    .about-cta__content { position:relative; z-index:1; }
+    .about-cta__title { font-size:32px; font-weight:800; color:#fff; margin-bottom:12px; }
+    .about-cta__sub { font-size:16px; color:rgba(255,255,255,0.8); margin-bottom:32px; max-width:480px; margin-left:auto; margin-right:auto; }
+    .about-cta__form { display:flex; gap:12px; max-width:440px; margin:0 auto; }
+    .about-cta__form input { flex:1; padding:14px 20px; border:none; border-radius:var(--radius); font-size:15px; outline:none; }
+    .about-cta__form button { padding:14px 32px; background:var(--primary); color:#fff; border:none; border-radius:var(--radius); font-size:15px; font-weight:600; cursor:pointer; transition:background 0.2s; white-space:nowrap; }
+    .about-cta__form button:hover { background:#c04a20; }
+
+    @media(max-width:1024px) {
+      .about-hero-v2__title { font-size:34px; }
+      .about-stats { grid-template-columns:repeat(2,1fr); }
+      .about-stat:nth-child(2) { border-right:none; }
+      .about-stat:nth-child(1),.about-stat:nth-child(2) { border-bottom:1px solid var(--border-light); }
+      .about-story { grid-template-columns:1fr; gap:40px; }
+      .about-values-v2 { grid-template-columns:repeat(2,1fr); }
+      .about-team-v2 { grid-template-columns:repeat(2,1fr); gap:32px; }
+    }
+    @media(max-width:640px) {
+      .about-hero-v2 { height:340px; }
+      .about-hero-v2__title { font-size:26px; }
+      .about-hero-v2__sub { font-size:15px; }
+      .about-stats { grid-template-columns:1fr 1fr; margin-top:-32px; }
+      .about-stat { padding:24px 16px; }
+      .about-stat__number { font-size:28px; }
+      .about-story__title { font-size:24px; }
+      .about-values-v2 { grid-template-columns:1fr; }
+      .about-team-v2 { grid-template-columns:1fr 1fr; }
+      .about-cta { padding:40px 24px; }
+      .about-cta__title { font-size:24px; }
+      .about-cta__form { flex-direction:column; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar" id="navbar">
+    <div class="navbar__inner">
+      <a href="index.html" class="navbar__brand">
+        <span class="navbar__brand-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L3 14h9l-1 10 10-12h-9l1-10z"/></svg></span>
+        Vibent
+      </a>
+      <div class="navbar__links" id="navLinks">
+        <a href="events.html" class="navbar__link">Find Events</a>
+        <a href="how-it-works.html" class="navbar__link">How It Works</a>
+        <a href="pricing.html" class="navbar__link">Pricing</a>
+        <a href="about.html" class="navbar__link">About</a>
+      </div>
+      <div class="navbar__spacer"></div>
+      <div class="navbar__search">
+        <input type="text" id="navSearchInput" placeholder="Search events" aria-label="Search events">
+        <button class="navbar__search-btn" aria-label="Search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </button>
+      </div>
+      <div class="navbar__actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <a href="contact.html" class="btn btn--ghost" style="font-size:14px;">Contact Us</a>
+        <a href="pricing.html" class="btn btn--primary" style="font-size:14px;">Sign up</a>
+        <button class="navbar__hamburger" id="hamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="about-hero-v2">
+    <div class="about-hero-v2__bg">
+      <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1400&h=500&fit=crop" alt="Event crowd" loading="eager">
+    </div>
+    <div class="about-hero-v2__overlay"></div>
+    <div class="container about-hero-v2__content">
+      <div class="about-hero-v2__badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L3 14h9l-1 10 10-12h-9l1-10z"/></svg>
+        Our Story
+      </div>
+      <h1 class="about-hero-v2__title">Connecting People Through<br>Unforgettable Experiences</h1>
+      <p class="about-hero-v2__sub">We believe the best memories are made when people come together. Vibent makes it easy to discover, create, and share events that matter.</p>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section style="padding:0 24px;">
+    <div class="container">
+      <div class="about-stats">
+        <div class="about-stat">
+          <div class="about-stat__number">50K+</div>
+          <div class="about-stat__label">Active Users</div>
+        </div>
+        <div class="about-stat">
+          <div class="about-stat__number">12K+</div>
+          <div class="about-stat__label">Events Hosted</div>
+        </div>
+        <div class="about-stat">
+          <div class="about-stat__number">180+</div>
+          <div class="about-stat__label">Cities Worldwide</div>
+        </div>
+        <div class="about-stat">
+          <div class="about-stat__number">4.9</div>
+          <div class="about-stat__label">Average Rating</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STORY -->
+  <section class="section" style="padding-top:80px;">
+    <div class="container">
+      <div class="about-story">
+        <div>
+          <span class="about-story__tag">Who We Are</span>
+          <h2 class="about-story__title">Making Every Moment Count Since 2024</h2>
+          <p class="about-story__text">Vibent was born from a simple idea: finding and attending great events shouldn't be complicated. We believe that shared experiences — whether a tech conference, a jazz night, or a food festival — are what make life rich.</p>
+          <p class="about-story__text">Founded in 2024, we've grown from a small side project to a platform serving over 50,000 event-goers across 180+ cities. Our team is passionate about building tools that help organizers succeed and attendees discover their next favorite event.</p>
+          <p class="about-story__text">We're not just a ticketing platform. We're a community of creators, explorers, and experience-seekers who believe the best memories are made when people come together.</p>
+        </div>
+        <div class="about-story__image">
+          <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&h=400&fit=crop" alt="Team collaborating" loading="lazy">
+          <div class="about-story__image-badge">
+            <div class="about-story__image-badge-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <div>
+              <div class="about-story__image-badge-text">50,000+ Happy Users</div>
+              <div class="about-story__image-badge-sub">Across 180+ cities worldwide</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALUES -->
+  <section class="section" style="background:var(--bg-secondary);border-top:1px solid var(--border-light);border-bottom:1px solid var(--border-light);">
+    <div class="container">
+      <div class="section__header" style="text-align:center;margin-bottom:40px;">
+        <span style="display:inline-block;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--primary);margin-bottom:10px;">What Drives Us</span>
+        <h2 class="section__title">Our Core Values</h2>
+        <p class="section__desc">The principles that guide every decision we make.</p>
+      </div>
+      <div class="about-values-v2">
+        <div class="about-value-v2">
+          <div class="about-value-v2__icon" style="background:rgba(217,90,43,0.1);color:var(--primary);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </div>
+          <h3>Passion First</h3>
+          <p>We're passionate about experiences that bring joy and meaning to people's lives. Every feature we build starts with that belief.</p>
+        </div>
+        <div class="about-value-v2">
+          <div class="about-value-v2__icon" style="background:rgba(30,140,107,0.1);color:#1E8C6B;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3>Trust & Safety</h3>
+          <p>Every event is verified. Every transaction is secure. Our users' safety is non-negotiable — it's foundational.</p>
+        </div>
+        <div class="about-value-v2">
+          <div class="about-value-v2__icon" style="background:rgba(54,89,227,0.1);color:#3659E3;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          <h3>Global Reach</h3>
+          <p>Events from 180+ cities, connected by a platform that knows no borders. Your next adventure is one click away.</p>
+        </div>
+        <div class="about-value-v2">
+          <div class="about-value-v2__icon" style="background:rgba(217,90,43,0.1);color:var(--primary);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <h3>Quality Curated</h3>
+          <p>We handpick and curate events so you always find something exceptional. No noise, only the best.</p>
+        </div>
+        <div class="about-value-v2">
+          <div class="about-value-v2__icon" style="background:rgba(30,140,107,0.1);color:#1E8C6B;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h3>Community Driven</h3>
+          <p>Built by event lovers, for event lovers. Your feedback shapes what we build and how we grow.</p>
+        </div>
+        <div class="about-value-v2">
+          <div class="about-value-v2__icon" style="background:rgba(54,89,227,0.1);color:#3659E3;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <h3>Innovation</h3>
+          <p>Constantly improving our platform with the latest technology and design trends to serve you better.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section class="section">
+    <div class="container">
+      <div class="about-team-v2__header">
+        <span class="about-team-v2__tag">Our People</span>
+        <h2 class="about-team-v2__title">Meet the Team</h2>
+        <p class="about-team-v2__sub">A small, passionate team building something we truly believe in.</p>
+      </div>
+      <div class="about-team-v2">
+        <div class="about-team-card">
+          <div class="about-team-card__image">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&crop=face" alt="Alex Morgan" loading="lazy">
+          </div>
+          <div class="about-team-card__name">Alex Morgan</div>
+          <div class="about-team-card__role">CEO & Co-Founder</div>
+          <div class="about-team-card__socials">
+            <a href="#" class="about-team-card__social" aria-label="Twitter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg></a>
+            <a href="#" class="about-team-card__social" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+          </div>
+        </div>
+        <div class="about-team-card">
+          <div class="about-team-card__image">
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&h=300&fit=crop&crop=face" alt="Jamie Lee" loading="lazy">
+          </div>
+          <div class="about-team-card__name">Jamie Lee</div>
+          <div class="about-team-card__role">Head of Design</div>
+          <div class="about-team-card__socials">
+            <a href="#" class="about-team-card__social" aria-label="Twitter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg></a>
+            <a href="#" class="about-team-card__social" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+          </div>
+        </div>
+        <div class="about-team-card">
+          <div class="about-team-card__image">
+            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop&crop=face" alt="Sam Patel" loading="lazy">
+          </div>
+          <div class="about-team-card__name">Sam Patel</div>
+          <div class="about-team-card__role">Lead Engineer</div>
+          <div class="about-team-card__socials">
+            <a href="#" class="about-team-card__social" aria-label="Twitter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg></a>
+            <a href="#" class="about-team-card__social" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+          </div>
+        </div>
+        <div class="about-team-card">
+          <div class="about-team-card__image">
+            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=300&fit=crop&crop=face" alt="Jordan Wu" loading="lazy">
+          </div>
+          <div class="about-team-card__name">Jordan Wu</div>
+          <div class="about-team-card__role">Head of Marketing</div>
+          <div class="about-team-card__socials">
+            <a href="#" class="about-team-card__social" aria-label="Twitter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg></a>
+            <a href="#" class="about-team-card__social" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section" style="padding-top:0;">
+    <div class="container">
+      <div class="about-cta">
+        <div class="about-cta__bg">
+          <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=1200&h=500&fit=crop" alt="Concert lights" loading="lazy">
+        </div>
+        <div class="about-cta__overlay"></div>
+        <div class="about-cta__content">
+          <h2 class="about-cta__title">Join Our Community</h2>
+          <p class="about-cta__sub">Stay updated with the latest events, new features, and exclusive offers.</p>
+          <form class="about-cta__form" id="newsletterForm">
+            <input type="email" placeholder="Enter your email" required aria-label="Email address">
+            <button type="submit">Subscribe</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <!-- Main Grid -->
+      <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr 1.2fr;gap:36px;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,0.08);">
+        <!-- Brand -->
+        <div>
+          <a href="index.html" style="display:inline-flex;align-items:center;gap:8px;text-decoration:none;margin-bottom:14px;">
+            <span style="width:32px;height:32px;background:var(--primary);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L3 14h9l-1 10 10-12h-9l1-10z"/></svg></span>
+            <span style="font-size:18px;font-weight:800;color:#fff;">Vibent</span>
+          </a>
+          <p style="color:rgba(255,255,255,0.5);font-size:13px;line-height:1.7;max-width:260px;margin-bottom:20px;">Find events, connect with people, and create unforgettable memories.</p>
+          <div style="display:flex;gap:10px;">
+            <a href="#" style="width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.5);transition:all 0.2s;text-decoration:none;" onmouseover="this.style.background='#1DA1F2';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,0.06)';this.style.color='rgba(255,255,255,0.5)'" aria-label="Twitter"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+            <a href="#" style="width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.5);transition:all 0.2s;text-decoration:none;" onmouseover="this.style.background='linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,0.06)';this.style.color='rgba(255,255,255,0.5)'" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+            <a href="#" style="width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.5);transition:all 0.2s;text-decoration:none;" onmouseover="this.style.background='#1877F2';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,0.06)';this.style.color='rgba(255,255,255,0.5)'" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+            <a href="#" style="width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.5);transition:all 0.2s;text-decoration:none;" onmouseover="this.style.background='#FF0000';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,0.06)';this.style.color='rgba(255,255,255,0.5)'" aria-label="YouTube"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+          </div>
+        </div>
+
+        <!-- Use Vibent -->
+        <div>
+          <h4 style="color:#fff;font-size:14px;font-weight:700;margin-bottom:16px;">Use Vibent</h4>
+          <ul style="list-style:none;padding:0;margin:0;">
+            <li style="margin-bottom:10px;"><a href="events.html" style="color:rgba(255,255,255,0.5);font-size:13px;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Find events</a></li>
+            <li style="margin-bottom:10px;"><a href="pricing.html" style="color:rgba(255,255,255,0.5);font-size:13px;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Create events</a></li>
+            <li style="margin-bottom:10px;"><a href="pricing.html" style="color:rgba(255,255,255,0.5);font-size:13px;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Pricing</a></li>
+            <li style="margin-bottom:10px;"><a href="how-it-works.html" style="color:rgba(255,255,255,0.5);font-size:13px;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">How It Works</a></li>
+          </ul>
+        </div>
+
+        <!-- Plan Events -->
+        <div>
+          <h4 style="color:#fff;font-size:14px;font-weight:700;margin-bottom:16px;">Plan Events</h4>
+          <ul style="list-style:none;padding:0;margin:0;">
+            <li style="margin-bottom:10px;"><a href="pricing.html" style="color:rgba(255,255,255,0.5);font-size:13px;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Event planning</a></li>
+            <li style="margin-bottom:10px;"><a href="pricing.html" style="color:rgba(255,255,255,0.5);font-size:13px;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Event marketing</a></li>
+            <li style="margin-bottom:10px;"><a href="pricing.html" style="color:rgba(255,255,255,0.5);font-size:13px;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Event ticketing</a></li>
+            <li style="margin-bottom:10px;"><a href="events.html" style="color:rgba(255,255,255,0.5);font-size:13px;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Online events</a></li>
+          </ul>
+        </div>
+
+        <!-- Connect -->
+        <div>
+          <h4 style="color:#fff;font-size:14px;font-weight:700;margin-bottom:16px;">Connect with us</h4>
+          <ul style="list-style:none;padding:0;margin:0;">
+            <li style="margin-bottom:10px;"><a href="about.html" style="color:rgba(255,255,255,0.5);font-size:13px;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">About us</a></li>
+            <li style="margin-bottom:10px;"><a href="contact.html" style="color:rgba(255,255,255,0.5);font-size:13px;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Contact us</a></li>
+            <li style="margin-bottom:10px;"><a href="contact.html" style="color:rgba(255,255,255,0.5);font-size:13px;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Help center</a></li>
+            <li style="margin-bottom:10px;"><a href="about.html" style="color:rgba(255,255,255,0.5);font-size:13px;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.5)'">Careers</a></li>
+          </ul>
+        </div>
+
+        <!-- Download -->
+        <div>
+          <h4 style="color:#fff;font-size:14px;font-weight:700;margin-bottom:16px;">Get the App</h4>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <a href="#" style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:var(--radius);text-decoration:none;transition:all 0.2s;" onmouseover="this.style.borderColor='rgba(255,255,255,0.2)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)'">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="rgba(255,255,255,0.7)"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.32 2.32-2.12 4.51-3.74 4.25z"/></svg>
+              <div>
+                <div style="font-size:10px;color:rgba(255,255,255,0.5);line-height:1;">Download on the</div>
+                <div style="font-size:13px;font-weight:600;color:#fff;line-height:1.3;">App Store</div>
+              </div>
+            </a>
+            <a href="#" style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:var(--radius);text-decoration:none;transition:all 0.2s;" onmouseover="this.style.borderColor='rgba(255,255,255,0.2)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)'">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="rgba(255,255,255,0.7)"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302-2.302 2.302-2.535-2.302 2.535-2.302zM5.864 3.458L16.8 9.79l-2.302 2.302L5.864 3.458z"/></svg>
+              <div>
+                <div style="font-size:10px;color:rgba(255,255,255,0.5);line-height:1;">Get it on</div>
+                <div style="font-size:13px;font-weight:600;color:#fff;line-height:1.3;">Google Play</div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom -->
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:24px 0;flex-wrap:wrap;gap:12px;">
+        <div style="display:flex;align-items:center;gap:16px;">
+          <p style="color:rgba(255,255,255,0.35);font-size:12px;margin:0;">&copy; 2026 Vibent. All rights reserved.</p>
+        </div>
+        <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+          <a href="#" style="color:rgba(255,255,255,0.35);font-size:12px;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.35)'">Terms</a>
+          <a href="#" style="color:rgba(255,255,255,0.35);font-size:12px;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.35)'">Privacy</a>
+          <a href="#" style="color:rgba(255,255,255,0.35);font-size:12px;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.35)'">Cookie Policy</a>
+          <a href="#" style="color:rgba(255,255,255,0.35);font-size:12px;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.35)'">Sitemap</a>
+          <a href="#" style="color:rgba(255,255,255,0.35);font-size:12px;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.35)'">Accessibility</a>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          <span style="color:rgba(255,255,255,0.35);font-size:12px;">English</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast-container" id="toastContainer"></div>
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
+  <script src="js/utils.js"></script>
+  <script src="js/darkmode.js"></script>
+  <script src="js/search.js"></script>
+  <script src="js/events.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

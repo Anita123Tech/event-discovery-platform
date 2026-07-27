@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Get in touch with Vibent. We'd love to hear from you.">
+  <title>Contact — Vibent</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/darkmode.css">
+  <style>
+    .contact-hero-v2 { position:relative; height:380px; display:flex; align-items:center; overflow:hidden; }
+    .contact-hero-v2__bg { position:absolute; inset:0; }
+    .contact-hero-v2__bg img { width:100%; height:100%; object-fit:cover; }
+    .contact-hero-v2__overlay { position:absolute; inset:0; background:linear-gradient(135deg, rgba(28,11,43,0.92) 0%, rgba(217,90,43,0.8) 100%); }
+    .contact-hero-v2__content { position:relative; z-index:1; text-align:center; width:100%; }
+    .contact-hero-v2__badge { display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,0.15); backdrop-filter:blur(8px); border:1px solid rgba(255,255,255,0.2); padding:8px 18px; border-radius:100px; font-size:13px; font-weight:600; color:#fff; margin-bottom:20px; }
+    .contact-hero-v2__title { font-size:42px; font-weight:800; color:#fff; line-height:1.15; margin-bottom:14px; }
+    .contact-hero-v2__sub { font-size:17px; color:rgba(255,255,255,0.8); max-width:500px; margin:0 auto; line-height:1.6; }
+
+    .contact-grid-v2 { display:grid; grid-template-columns:1.2fr 1fr; gap:48px; align-items:start; }
+    .contact-form-v2 { background:var(--bg-white); border:1px solid var(--border-light); border-radius:var(--radius-xl); padding:40px; box-shadow:var(--shadow-sm); }
+    .contact-form-v2__title { font-size:22px; font-weight:800; color:var(--text); margin-bottom:6px; }
+    .contact-form-v2__sub { font-size:14px; color:var(--text-secondary); margin-bottom:28px; }
+    .contact-form-v2 .form-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .contact-form-v2 label { display:block; font-size:13px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .contact-form-v2 input, .contact-form-v2 select, .contact-form-v2 textarea {
+      width:100%; padding:12px 16px; background:var(--bg); border:1px solid var(--border-light);
+      border-radius:var(--radius); color:var(--text); font-size:14px; outline:none;
+      transition:border-color 0.2s; font-family:inherit;
+    }
+    .contact-form-v2 input:focus, .contact-form-v2 select:focus, .contact-form-v2 textarea:focus { border-color:var(--primary); }
+    .contact-form-v2 textarea { resize:vertical; min-height:120px; }
+    .contact-form-v2 select { appearance:none; background-image:url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; }
+    .contact-form-v2__submit { width:100%; padding:14px; background:var(--primary); color:#fff; border:none; border-radius:var(--radius); font-size:15px; font-weight:600; cursor:pointer; transition:background 0.2s; display:flex; align-items:center; justify-content:center; gap:8px; }
+    .contact-form-v2__submit:hover { background:#c04a20; }
+    .contact-form-v2__submit svg { width:18px; height:18px; }
+
+    .contact-info-v2 { display:flex; flex-direction:column; gap:20px; }
+    .contact-info-card { background:var(--bg-white); border:1px solid var(--border-light); border-radius:var(--radius-xl); padding:28px; transition:all 0.3s; }
+    .contact-info-card:hover { border-color:var(--primary); box-shadow:var(--shadow-md); }
+    .contact-info-card__icon { width:48px; height:48px; border-radius:var(--radius-lg); display:flex; align-items:center; justify-content:center; margin-bottom:14px; }
+    .contact-info-card__icon svg { width:22px; height:22px; }
+    .contact-info-card h4 { font-size:15px; font-weight:700; color:var(--text); margin-bottom:6px; }
+    .contact-info-card p { font-size:14px; color:var(--text-secondary); line-height:1.6; }
+    .contact-info-card a { color:var(--primary); text-decoration:none; font-weight:600; }
+
+    .contact-faq { max-width:720px; margin:0 auto; }
+    .contact-faq-item { border:1px solid var(--border-light); border-radius:var(--radius-lg); margin-bottom:12px; overflow:hidden; background:var(--bg-white); transition:border-color 0.2s; }
+    .contact-faq-item:hover { border-color:var(--primary); }
+    .contact-faq-q { display:flex; align-items:center; justify-content:space-between; padding:18px 24px; cursor:pointer; font-size:15px; font-weight:600; color:var(--text); }
+    .contact-faq-q svg { width:18px; height:18px; color:var(--text-secondary); transition:transform 0.3s; flex-shrink:0; }
+    .contact-faq-item.open .contact-faq-q svg { transform:rotate(180deg); }
+    .contact-faq-a { padding:0 24px 18px; font-size:14px; color:var(--text-secondary); line-height:1.7; display:none; }
+    .contact-faq-item.open .contact-faq-a { display:block; }
+
+    @media(max-width:1024px) {
+      .contact-hero-v2__title { font-size:32px; }
+      .contact-grid-v2 { grid-template-columns:1fr; }
+    }
+    @media(max-width:640px) {
+      .contact-hero-v2 { height:300px; }
+      .contact-hero-v2__title { font-size:26px; }
+      .contact-hero-v2__sub { font-size:15px; }
+      .contact-form-v2 { padding:28px 20px; }
+      .contact-form-v2 .form-row { grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar" id="navbar">
+    <div class="navbar__inner">
+      <a href="index.html" class="navbar__brand">
+        <span class="navbar__brand-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L3 14h9l-1 10 10-12h-9l1-10z"/></svg></span>
+        Vibent
+      </a>
+      <div class="navbar__links" id="navLinks">
+        <a href="events.html" class="navbar__link">Find Events</a>
+        <a href="how-it-works.html" class="navbar__link">How It Works</a>
+        <a href="pricing.html" class="navbar__link">Pricing</a>
+        <a href="about.html" class="navbar__link">About</a>
+      </div>
+      <div class="navbar__spacer"></div>
+      <div class="navbar__search">
+        <input type="text" id="navSearchInput" placeholder="Search events" aria-label="Search events">
+        <button class="navbar__search-btn" aria-label="Search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </button>
+      </div>
+      <div class="navbar__actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <a href="contact.html" class="btn btn--ghost" style="font-size:14px;">Contact Us</a>
+        <a href="pricing.html" class="btn btn--primary" style="font-size:14px;">Sign up</a>
+        <button class="navbar__hamburger" id="hamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="contact-hero-v2">
+    <div class="contact-hero-v2__bg">
+      <img src="https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=1400&h=500&fit=crop" alt="Contact us" loading="eager">
+    </div>
+    <div class="contact-hero-v2__overlay"></div>
+    <div class="container contact-hero-v2__content">
+      <div class="contact-hero-v2__badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Get in Touch
+      </div>
+      <h1 class="contact-hero-v2__title">We'd Love to Hear<br>From You</h1>
+      <p class="contact-hero-v2__sub">Have a question, feedback, or want to partner with us? Our team is ready to help.</p>
+    </div>
+  </section>
+
+  <!-- CONTACT GRID -->
+  <section class="section">
+    <div class="container">
+      <div class="contact-grid-v2">
+        <!-- Form -->
+        <div class="contact-form-v2">
+          <h2 class="contact-form-v2__title">Send us a Message</h2>
+          <p class="contact-form-v2__sub">Fill out the form below and we'll get back to you within 24 hours.</p>
+          <form id="contactForm">
+            <div class="form-row" style="margin-bottom:16px;">
+              <div>
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" placeholder="John" required>
+              </div>
+              <div>
+                <label for="lastName">Last Name</label>
+                <input type="text" id="lastName" placeholder="Doe" required>
+              </div>
+            </div>
+            <div style="margin-bottom:16px;">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" placeholder="john@example.com" required>
+            </div>
+            <div style="margin-bottom:16px;">
+              <label for="subject">Subject</label>
+              <select id="subject" required>
+                <option value="" disabled selected>Select a topic...</option>
+                <option value="general">General Inquiry</option>
+                <option value="support">Technical Support</option>
+                <option value="billing">Billing Question</option>
+                <option value="partnership">Partnership</option>
+                <option value="feedback">Feedback</option>
+              </select>
+            </div>
+            <div style="margin-bottom:24px;">
+              <label for="message">Message</label>
+              <textarea id="message" placeholder="Tell us how we can help..." rows="5" required></textarea>
+            </div>
+            <button type="submit" class="contact-form-v2__submit">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+              Send Message
+            </button>
+          </form>
+        </div>
+
+        <!-- Info Cards -->
+        <div class="contact-info-v2">
+          <div class="contact-info-card">
+            <div class="contact-info-card__icon" style="background:rgba(217,90,43,0.1);color:var(--primary);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <h4>Email Us</h4>
+            <p><a href="mailto:hello@vibent.com">hello@vibent.com</a><br><a href="mailto:support@vibent.com">support@vibent.com</a></p>
+          </div>
+          <div class="contact-info-card">
+            <div class="contact-info-card__icon" style="background:rgba(30,140,107,0.1);color:#1E8C6B;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <h4>Visit Our Office</h4>
+            <p>123 Innovation Drive<br>San Francisco, CA 94105</p>
+          </div>
+          <div class="contact-info-card">
+            <div class="contact-info-card__icon" style="background:rgba(54,89,227,0.1);color:#3659E3;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </div>
+            <h4>Call Us</h4>
+            <p><a href="tel:+15551234567">+1 (555) 123-4567</a><br>Mon - Fri, 9am - 6pm PT</p>
+          </div>
+          <div class="contact-info-card">
+            <div class="contact-info-card__icon" style="background:rgba(217,90,43,0.1);color:var(--primary);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <h4>Response Time</h4>
+            <p>We typically respond within<br><strong>24 hours</strong> on business days.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section" style="background:var(--bg-secondary);border-top:1px solid var(--border-light);border-bottom:1px solid var(--border-light);">
+    <div class="container">
+      <div style="text-align:center;margin-bottom:40px;">
+        <span style="display:inline-block;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--primary);margin-bottom:10px;">FAQ</span>
+        <h2 style="font-size:30px;font-weight:800;color:var(--text);margin-bottom:10px;">Frequently Asked Questions</h2>
+        <p style="font-size:15px;color:var(--text-secondary);">Quick answers to common questions.</p>
+      </div>
+      <div class="contact-faq">
+        <div class="contact-faq-item">
+          <div class="contact-faq-q" onclick="this.parentElement.classList.toggle('open')">
+            How do I create an event on Vibent?
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="contact-faq-a">Creating an event is easy! Sign up for a free account, click "Create Event," fill in the details (title, date, location, ticket types), and publish. Your event goes live immediately and starts appearing in search results.</div>
+        </div>
+        <div class="contact-faq-item">
+          <div class="contact-faq-q" onclick="this.parentElement.classList.toggle('open')">
+            What are the fees for selling tickets?
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="contact-faq-a">Vibent charges a small service fee per ticket sold. Free events have no fees. Check our <a href="pricing.html" style="color:var(--primary);">pricing page</a> for a complete breakdown of our transparent fee structure.</div>
+        </div>
+        <div class="contact-faq-item">
+          <div class="contact-faq-q" onclick="this.parentElement.classList.toggle('open')">
+            How do I get a refund?
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="contact-faq-a">Refund policies are set by event organizers. If you need a refund, contact the organizer directly through the event page. If you have issues, our support team is here to help mediate.</div>
+        </div>
+        <div class="contact-faq-item">
+          <div class="contact-faq-q" onclick="this.parentElement.classList.toggle('open')">
+            Can I transfer my ticket to someone else?
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="contact-faq-a">Yes! You can transfer your ticket from your account settings. Go to "My Tickets," select the ticket, and click "Transfer." The new recipient will receive the ticket via email.</div>
+        </div>
+        <div class="contact-faq-item">
+          <div class="contact-faq-q" onclick="this.parentElement.classList.toggle('open')">
+            How do I contact support for a specific event?
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="contact-faq-a">On each event page, you'll find a "Contact Organizer" button. This sends your message directly to the event host. For platform-related issues, use the form above or email us directly.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:36px;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,0.08);">
+        <div>
+          <a href="index.html" style="display:inline-flex;align-items:center;gap:8px;text-decoration:none;margin-bottom:14px;">
+            <span style="width:32px;height:32px;background:var(--primary);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L3 14h9l-1 10 10-12h-9l1-10z"/></svg></span>
+            <span style="font-size:18px;font-weight:800;color:#fff;">Vibent</span>
+          </a>
+          <p style="color:rgba(255,255,255,0.5);font-size:13px;line-height:1.7;max-width:260px;">Find events, connect with people, and create unforgettable memories.</p>
+        </div>
+        <div>
+          <h4 style="color:#fff;font-size:14px;font-weight:700;margin-bottom:16px;">Use Vibent</h4>
+          <ul style="list-style:none;padding:0;margin:0;"><li style="margin-bottom:10px;"><a href="events.html" style="color:rgba(255,255,255,0.5);font-size:13px;text-decoration:none;">Find events</a></li><li style="margin-bottom:10px;"><a href="pricing.html" style="color:rgba(255,255,255,0.5);font-size:13px;text-decoration:none;">Create events</a></li><li style="margin-bottom:10px;"><a href="pricing.html" style="color:rgba(255,255,255,0.5);font-size:13px;text-decoration:none;">Pricing</a></li></ul>
+        </div>
+        <div>
+          <h4 style="color:#fff;font-size:14px;font-weight:700;margin-bottom:16px;">Plan Events</h4>
+          <ul style="list-style:none;padding:0;margin:0;"><li style="margin-bottom:10px;"><a href="pricing.html" style="color:rgba(255,255,255,0.5);font-size:13px;text-decoration:none;">Event planning</a></li><li style="margin-bottom:10px;"><a href="pricing.html" style="color:rgba(255,255,255,0.5);font-size:13px;text-decoration:none;">Event marketing</a></li><li style="margin-bottom:10px;"><a href="pricing.html" style="color:rgba(255,255,255,0.5);font-size:13px;text-decoration:none;">Event ticketing</a></li></ul>
+        </div>
+        <div>
+          <h4 style="color:#fff;font-size:14px;font-weight:700;margin-bottom:16px;">Connect with us</h4>
+          <ul style="list-style:none;padding:0;margin:0;"><li style="margin-bottom:10px;"><a href="about.html" style="color:rgba(255,255,255,0.5);font-size:13px;text-decoration:none;">About us</a></li><li style="margin-bottom:10px;"><a href="contact.html" style="color:rgba(255,255,255,0.5);font-size:13px;text-decoration:none;">Contact us</a></li><li style="margin-bottom:10px;"><a href="about.html" style="color:rgba(255,255,255,0.5);font-size:13px;text-decoration:none;">Careers</a></li></ul>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:24px 0;flex-wrap:wrap;gap:12px;">
+        <p style="color:rgba(255,255,255,0.35);font-size:12px;margin:0;">&copy; 2026 Vibent. All rights reserved.</p>
+        <div style="display:flex;gap:20px;">
+          <a href="#" style="color:rgba(255,255,255,0.35);font-size:12px;text-decoration:none;">Terms</a>
+          <a href="#" style="color:rgba(255,255,255,0.35);font-size:12px;text-decoration:none;">Privacy</a>
+          <a href="#" style="color:rgba(255,255,255,0.35);font-size:12px;text-decoration:none;">Cookie Policy</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast-container" id="toastContainer"></div>
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
+  <script src="js/utils.js"></script>
+  <script src="js/darkmode.js"></script>
+  <script src="js/search.js"></script>
+  <script src="js/events.js"></script>
+  <script src="js/main.js"></script>
+
+  <script>
+  document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var formData = {
+      firstName: document.getElementById('firstName').value,
+      lastName: document.getElementById('lastName').value,
+      email: document.getElementById('email').value,
+      subject: document.getElementById('subject').value,
+      message: document.getElementById('message').value,
+      timestamp: new Date().toISOString()
+    };
+    var messages = Utils.getStorage('contact-messages', []);
+    messages.push(formData);
+    Utils.setStorage('contact-messages', messages);
+    Utils.showToast('Message sent successfully! We\'ll get back to you soon.', 'success');
+    e.target.reset();
+  });
+  </script>
+</body>
+</html>

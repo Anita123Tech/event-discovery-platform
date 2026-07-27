@@ -1,0 +1,64 @@
+/* ============================================
+   DARKMODE.CSS — Dark theme overrides
+   ============================================ */
+
+[data-theme="dark"] .hero__search { background: var(--bg-white); }
+[data-theme="dark"] .event-card__save { background: rgba(28, 28, 36, 0.9); }
+[data-theme="dark"] ::-webkit-scrollbar { width: 8px; }
+[data-theme="dark"] ::-webkit-scrollbar-track { background: var(--bg); }
+[data-theme="dark"] ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+::selection { background: var(--primary); color: #fff; }
+*:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+
+/* Dark mode overrides for Eventbrite-style sections */
+[data-theme="dark"] .cat-chip { background: var(--bg); border-color: var(--border); color: var(--text); }
+[data-theme="dark"] .browse-search { background: var(--bg); border-color: var(--border); }
+[data-theme="dark"] .browse-search input { color: var(--text); }
+[data-theme="dark"] .pricing-card { background: var(--bg); border-color: var(--border); }
+[data-theme="dark"] .about-value { background: var(--bg); border-color: var(--border); }
+[data-theme="dark"] .dest-card__name { text-shadow: 0 1px 4px rgba(0,0,0,0.8); }
+[data-theme="dark"] .cities-list a { color: var(--text-secondary); }
+
+/* Dark mode: About page */
+[data-theme="dark"] .about-stats { background: var(--bg); border-color: var(--border); }
+[data-theme="dark"] .about-stat { border-color: var(--border); }
+[data-theme="dark"] .about-stat__label { color: var(--text-secondary); }
+[data-theme="dark"] .about-story__image-badge { background: rgba(30,28,38,0.95); }
+[data-theme="dark"] .about-story__image-badge-text { color: var(--text); }
+[data-theme="dark"] .about-value-v2 { background: var(--bg); border-color: var(--border); }
+[data-theme="dark"] .about-value-v2:hover { border-color: var(--primary); }
+[data-theme="dark"] .about-team-card__image { border-color: var(--bg); }
+[data-theme="dark"] .about-team-card__social { border-color: var(--border); color: var(--text-secondary); }
+[data-theme="dark"] .about-team-card__social:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
+[data-theme="dark"] .about-cta__form input { background: var(--bg); color: var(--text); }
+
+/* Dark mode: How It Works page */
+[data-theme="dark"] .hiw-timeline-item__card { background: var(--bg); border-color: var(--border); }
+[data-theme="dark"] .hiw-timeline-item__feature { background: var(--bg); border-color: var(--border); color: var(--text-secondary); }
+[data-theme="dark"] .hiw-feature { background: var(--bg); border-color: var(--border); }
+[data-theme="dark"] .hiw-feature:hover { border-color: var(--primary); }
+
+/* Dark mode: Homepage How It Works */
+[data-theme="dark"] .hiw-home-card { background: var(--bg); border-color: var(--border); }
+[data-theme="dark"] .hiw-home-card:hover { border-color: var(--primary); }
+
+/* Dark mode: Contact page */
+[data-theme="dark"] .contact-form-v2 { background: var(--bg); border-color: var(--border); }
+[data-theme="dark"] .contact-form-v2 input, [data-theme="dark"] .contact-form-v2 select, [data-theme="dark"] .contact-form-v2 textarea { background: var(--bg); color: var(--text); border-color: var(--border); }
+[data-theme="dark"] .contact-info-card { background: var(--bg); border-color: var(--border); }
+[data-theme="dark"] .contact-info-card:hover { border-color: var(--primary); }
+[data-theme="dark"] .contact-faq-item { background: var(--bg); border-color: var(--border); }
+[data-theme="dark"] .contact-faq-item:hover { border-color: var(--primary); }
+
+/* Dark mode: Events page */
+[data-theme="dark"] .ev-hero__search { background: var(--bg-white); }
+[data-theme="dark"] .ev-hero__search input { color: var(--text); }
+[data-theme="dark"] .ev-filters { background: var(--bg); border-color: var(--border); }
+[data-theme="dark"] .ev-filters__search { border-color: var(--border); }
+[data-theme="dark"] .ev-filters__search input { color: var(--text); }
+[data-theme="dark"] .ev-filters__selects select { background: var(--bg-white); border-color: var(--border); color: var(--text); }
+[data-theme="dark"] .ev-card { background: var(--bg); border-color: var(--border); }
+[data-theme="dark"] .ev-card__save { background: rgba(28,28,36,0.9); }
+[data-theme="dark"] .ev-load-more { background: var(--bg); border-color: var(--border); color: var(--text); }
+[data-theme="dark"] .ev-load-more:hover { border-color: var(--primary); color: var(--primary); }
