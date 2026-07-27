@@ -83,10 +83,4 @@ event-discovery-platform/
 
 > **Note:** For full Fetch API functionality on `events.html`, serve via a local server (`npx serve .` or VS Code Live Server).
 
-## Author
 
-**Anita** — Repository Owner
-
-## License
-
-MIT
