@@ -438,11 +438,22 @@ input, textarea, select { font-family: inherit; }
 .newsletter__form input {
   padding: 12px 18px; border: 1px solid rgba(255,255,255,0.2);
   background: rgba(255,255,255,0.1); border-radius: var(--radius);
-  color: #fff; min-width: 260px; outline: none; font-size: 14px;
+  color: #fff;  outline: none; font-size: 14px;
   transition: border-color 0.2s;
 }
 .newsletter__form input::placeholder { color: rgba(255,255,255,0.5); }
 .newsletter__form input:focus { border-color: rgba(255,255,255,0.5); }
+
+/* ---------- HOW IT WORKS HOME PREVIEW ---------- */
+.hiw-home-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 32px; max-width: 960px; margin: 0 auto;
+}
+.footer__main-grid {
+  display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr 1.2fr;
+  gap: 36px; padding-bottom: 40px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
 
 /* ---------- FOOTER ---------- */
 .footer {
@@ -1085,3 +1096,5 @@ input, textarea, select { font-family: inherit; }
   .dest-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
   .dest-card { height: 130px; }
 }
+
+

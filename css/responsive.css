@@ -51,6 +51,9 @@
   .footer__grid > :first-child { grid-column: span 2; }
   .footer__grid > :last-child { grid-column: span 2; }
   .footer__bottom { flex-direction: column; gap: 12px; text-align: center; }
+  .footer__main-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
+  .footer__main-grid > :first-child { grid-column: span 2; }
+  .footer__main-grid > :last-child { grid-column: span 2; }
 
   .section { padding: 40px 0; }
   .section__header { margin-bottom: 16px; }
@@ -68,6 +71,8 @@
   .footer__grid { grid-template-columns: 1fr; }
   .footer__grid > :first-child, .footer__grid > :last-child { grid-column: span 1; }
   .footer { padding-top: 40px; margin-top: 48px; }
+  .footer__main-grid { grid-template-columns: 1fr; gap: 20px; }
+  .footer__main-grid > :first-child, .footer__main-grid > :last-child { grid-column: span 1; }
 
   .team-grid { grid-template-columns: 1fr 1fr; }
   .event-detail__image { height: 220px; }
@@ -85,6 +90,7 @@
   .dest-grid { grid-template-columns: repeat(2, 1fr); }
   .pricing-grid { grid-template-columns: 1fr; gap: 24px; }
   .hiw-steps { grid-template-columns: 1fr; gap: 32px; }
+  .hiw-home-grid { grid-template-columns: 1fr; gap: 24px; max-width: 400px; }
   .about-values { grid-template-columns: 1fr; }
   .about__team-grid { grid-template-columns: repeat(2, 1fr); }
   .cities-list { gap: 6px 16px; }
