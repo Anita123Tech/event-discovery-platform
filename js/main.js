@@ -22,6 +22,13 @@ var App = {
       if (nav) nav.classList.toggle('navbar--shadow', window.scrollY > 10);
     }, 100));
     if (ham && links) {
+      function closeMenu() {
+        ham.classList.remove('active');
+        links.classList.remove('open');
+        var ov = document.querySelector('.nav-overlay');
+        if (ov) { ov.classList.remove('active'); document.body.style.overflow=''; setTimeout(function(){ov.remove();},300); }
+        else document.body.style.overflow='';
+      }
       ham.addEventListener('click', function() {
         ham.classList.toggle('active');
         links.classList.toggle('open');
@@ -31,15 +38,13 @@ var App = {
           else ov.classList.add('active');
           document.body.style.overflow='hidden';
         } else {
-          if (ov) { ov.classList.remove('active'); document.body.style.overflow=''; }
+          closeMenu();
         }
       });
+      var closeBtn = document.getElementById('navClose');
+      if (closeBtn) closeBtn.addEventListener('click', closeMenu);
       document.addEventListener('click', function(e) {
-        if (e.target.classList.contains('nav-overlay')) {
-          ham.classList.remove('active'); links.classList.remove('open');
-          var o = e.target; o.classList.remove('active'); document.body.style.overflow='';
-          setTimeout(function(){o.remove();},300);
-        }
+        if (e.target.classList.contains('nav-overlay')) closeMenu();
       });
     }
   },

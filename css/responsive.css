@@ -22,6 +22,7 @@
     z-index: 999; align-items: stretch;
   }
   .navbar__links.open { right: 0; }
+  .navbar__links-header { display: flex; }
   .navbar__link { padding: 12px 14px; width: 100%; font-size: 15px; border-radius: var(--radius); }
   .navbar__spacer { display: none; }
   .navbar__hamburger { display: flex; }
