@@ -23,6 +23,7 @@
   }
   .navbar__links.open { right: 0; }
   .navbar__link { padding: 12px 14px; width: 100%; font-size: 15px; border-radius: var(--radius); }
+  .navbar__spacer { flex: 0; }
   .navbar__hamburger { display: flex; }
   .navbar__search { display: none; }
   .navbar__actions .btn { display: none; }
