@@ -2,7 +2,7 @@
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="Browse all upcoming events on Vibent. Filter by category, date, price, and more.">
   <title>Find Events — Vibent</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -10,9 +10,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/responsive.css">
-  <link rel="stylesheet" href="css/animations.css">
   <link rel="stylesheet" href="css/darkmode.css">
+  <link rel="stylesheet" href="css/responsive.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="css/animations.css" media="print" onload="this.media='all'">
 </head>
 <body>
 
@@ -23,15 +23,6 @@
         Vibent
       </a>
       <div class="navbar__links" id="navLinks">
-        <div class="navbar__links-header">
-          <a href="index.html" class="navbar__brand">
-            <span class="navbar__brand-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L3 14h9l-1 10 10-12h-9l1-10z"/></svg></span>
-            Vibent
-          </a>
-          <button class="navbar__close" id="navClose" aria-label="Close menu">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-          </button>
-        </div>
         <a href="events.html" class="navbar__link">Find Events</a>
         <a href="how-it-works.html" class="navbar__link">How It Works</a>
         <a href="pricing.html" class="navbar__link">Pricing</a>
@@ -160,7 +151,7 @@
   <footer class="footer">
     <div class="container">
       <!-- Main Grid -->
-      <div class="footer__main-grid">
+      <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr 1.2fr;gap:36px;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,0.08);">
         <!-- Brand -->
         <div>
           <a href="index.html" style="display:inline-flex;align-items:center;gap:8px;text-decoration:none;margin-bottom:14px;">
@@ -255,14 +246,14 @@
   <button class="back-to-top" id="backToTop" aria-label="Back to top">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
   </button>
-  <script src="js/utils.js"></script>
-  <script src="js/darkmode.js"></script>
-  <script src="js/search.js"></script>
-  <script src="js/events.js"></script>
-  <script src="js/main.js"></script>
+  <script src="js/utils.js" defer></script>
+  <script src="js/darkmode.js" defer></script>
+  <script src="js/search.js" defer></script>
+  <script src="js/events.js" defer></script>
+  <script src="js/main.js" defer></script>
 
   <script>
-  (function() {
+  document.addEventListener('DOMContentLoaded', function() {
     var PER_PAGE = 9;
     var allEvents = [];
     var filtered = [];
@@ -401,7 +392,7 @@
     }
 
     init();
-  })();
+  });
   </script>
 </body>
 </html>
