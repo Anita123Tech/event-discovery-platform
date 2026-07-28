@@ -88,7 +88,7 @@
 }
 
 @media (max-width: 768px) {
-  .hero-img { height: 280px; padding-top: calc(var(--nav-h) + 20px); }
+  .hero-img { height: 280px; padding-top: calc(var(--nav-h) + 40px); }
   .hero-img__title { font-size: 22px; }
   .dest-grid { grid-template-columns: repeat(2, 1fr); }
   .pricing-grid { grid-template-columns: 1fr; gap: 24px; }
@@ -105,7 +105,7 @@
 }
 
 @media (max-width: 480px) {
-  .hero-img { height: 220px; padding-top: calc(var(--nav-h) + 16px); }
+  .hero-img { height: 220px; padding-top: calc(var(--nav-h) + 32px); }
   .hero-img__title { font-size: 20px; }
   .dest-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
   .dest-card { height: 120px; }
