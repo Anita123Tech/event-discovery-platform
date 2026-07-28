@@ -23,10 +23,11 @@
   }
   .navbar__links.open { right: 0; }
   .navbar__link { padding: 12px 14px; width: 100%; font-size: 15px; border-radius: var(--radius); }
-  .navbar__spacer { flex: 0; }
+  .navbar__spacer { display: none; }
   .navbar__hamburger { display: flex; }
   .navbar__search { display: none; }
   .navbar__actions .btn { display: none; }
+  .navbar__inner { gap: 12px; }
 
   .hero { padding-top: calc(var(--nav-h) + 32px); padding-bottom: 40px; }
   .hero__title { font-size: 24px; }
