@@ -61,6 +61,7 @@
 
 @media (max-width: 480px) {
   .container { padding: 0 16px; }
+  .navbar__inner { padding: 0 16px; gap: 10px; }
   .hero__title { font-size: 22px; }
   .hero__subtitle { font-size: 14px; }
 
