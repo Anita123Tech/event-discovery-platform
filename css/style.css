@@ -1097,8 +1097,6 @@ input, textarea, select { font-family: inherit; }
 
 /* ---------- RESPONSIVE ADDITIONS ---------- */
 @media (max-width: 768px) {
-  .hero-img { height: 320px; }
-  .hero-img__title { font-size: 24px; }
   .dest-grid { grid-template-columns: repeat(2, 1fr); }
   .pricing-grid { grid-template-columns: 1fr; }
   .hiw-steps { grid-template-columns: 1fr; gap: 32px; }
@@ -1106,8 +1104,6 @@ input, textarea, select { font-family: inherit; }
   .cities-list { gap: 6px 16px; }
 }
 @media (max-width: 480px) {
-  .hero-img { height: 260px; }
-  .hero-img__title { font-size: 20px; }
   .dest-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
   .dest-card { height: 130px; }
 }
