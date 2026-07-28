@@ -27,6 +27,7 @@
   .navbar__hamburger { display: flex; }
   .navbar__search { display: none; }
   .navbar__actions .btn { display: none; }
+  .navbar__actions { margin-left: auto; }
   .navbar__inner { gap: 12px; }
 
   .hero { padding-top: calc(var(--nav-h) + 32px); padding-bottom: 40px; }
