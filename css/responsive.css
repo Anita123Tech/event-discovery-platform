@@ -125,7 +125,7 @@
   .ev-filters { flex-direction: column; align-items: stretch; }
   .ev-filters__search { border-right: none; border-bottom: 1px solid var(--border-light); padding-right: 0; padding-bottom: 12px; }
   .ev-filters__selects { width: 100%; }
-  .ev-filters__selects select { flex: 1; }
+  .ev-filters__selects select { flex: 1 1 45%; min-width: 140px; }
 }
 @media (max-width: 480px) {
   .ev-grid { grid-template-columns: 1fr; }
