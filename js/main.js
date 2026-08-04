@@ -88,4 +88,5 @@ var App = {
   }
 };
 
+Auth.init();
 document.addEventListener('DOMContentLoaded', function() { App.init(); });

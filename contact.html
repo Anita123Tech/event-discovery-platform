@@ -99,8 +99,9 @@
           <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
           <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
         </button>
-        <a href="contact.html" class="btn btn--ghost" style="font-size:14px;">Contact Us</a>
-        <a href="pricing.html" class="btn btn--primary" style="font-size:14px;">Sign up</a>
+        <a href="contact.html" class="btn btn--ghost">Contact Us</a>
+        <a href="login.html" class="btn btn--ghost">Log in</a>
+        <a href="register.html" class="btn btn--primary">Sign up</a>
         <button class="navbar__hamburger" id="hamburger" aria-label="Menu">
           <span></span><span></span><span></span>
         </button>
@@ -132,20 +133,23 @@
         <div class="contact-form-v2">
           <h2 class="contact-form-v2__title">Send us a Message</h2>
           <p class="contact-form-v2__sub">Fill out the form below and we'll get back to you within 24 hours.</p>
-          <form id="contactForm">
+          <form id="contactForm" novalidate>
             <div class="form-row" style="margin-bottom:16px;">
               <div>
                 <label for="firstName">First Name</label>
                 <input type="text" id="firstName" placeholder="John" required>
+                <span class="form-error" id="firstNameError"></span>
               </div>
               <div>
                 <label for="lastName">Last Name</label>
                 <input type="text" id="lastName" placeholder="Doe" required>
+                <span class="form-error" id="lastNameError"></span>
               </div>
             </div>
             <div style="margin-bottom:16px;">
               <label for="email">Email Address</label>
               <input type="email" id="email" placeholder="john@example.com" required>
+              <span class="form-error" id="emailError"></span>
             </div>
             <div style="margin-bottom:16px;">
               <label for="subject">Subject</label>
@@ -157,10 +161,12 @@
                 <option value="partnership">Partnership</option>
                 <option value="feedback">Feedback</option>
               </select>
+              <span class="form-error" id="subjectError"></span>
             </div>
             <div style="margin-bottom:24px;">
               <label for="message">Message</label>
               <textarea id="message" placeholder="Tell us how we can help..." rows="5" required></textarea>
+              <span class="form-error" id="messageError"></span>
             </div>
             <button type="submit" class="contact-form-v2__submit">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
@@ -294,18 +300,51 @@
   <script src="js/darkmode.js" defer></script>
   <script src="js/search.js" defer></script>
   <script src="js/events.js" defer></script>
+  <script src="js/auth.js" defer></script>
   <script src="js/main.js" defer></script>
 
   <script>
   document.addEventListener('DOMContentLoaded', function() {
-  document.getElementById('contactForm').addEventListener('submit', function(e) {
+  var form = document.getElementById('contactForm');
+  function clearErrors() {
+    form.querySelectorAll('.form-error').forEach(function(el) { el.textContent = ''; });
+    form.querySelectorAll('input, textarea, select').forEach(function(el) { el.style.borderColor = ''; });
+  }
+  function showError(id, msg) {
+    var e = document.getElementById(id);
+    if (e) e.textContent = msg;
+    var input = document.getElementById(id.replace('Error',''));
+    if (input) input.style.borderColor = '#EF4444';
+  }
+  function validate() {
+    var errors = 0;
+    var fn = document.getElementById('firstName').value.trim();
+    if (!fn) { showError('firstNameError', 'First name is required'); errors++; }
+    var ln = document.getElementById('lastName').value.trim();
+    if (!ln) { showError('lastNameError', 'Last name is required'); errors++; }
+    var email = document.getElementById('email').value.trim();
+    if (!email) { showError('emailError', 'Email is required'); errors++; }
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('emailError', 'Please enter a valid email address'); errors++; }
+    var subject = document.getElementById('subject').value;
+    if (!subject) { showError('subjectError', 'Please select a subject'); errors++; }
+    var message = document.getElementById('message').value.trim();
+    if (!message) { showError('messageError', 'Message is required'); errors++; }
+    else if (message.length < 10) { showError('messageError', 'Message must be at least 10 characters'); errors++; }
+    return errors === 0;
+  }
+  form.addEventListener('submit', function(e) {
     e.preventDefault();
+    clearErrors();
+    if (!validate()) {
+      Utils.showToast('Please fix the errors in the form', 'error');
+      return;
+    }
     var formData = {
-      firstName: document.getElementById('firstName').value,
-      lastName: document.getElementById('lastName').value,
-      email: document.getElementById('email').value,
+      firstName: document.getElementById('firstName').value.trim(),
+      lastName: document.getElementById('lastName').value.trim(),
+      email: document.getElementById('email').value.trim(),
       subject: document.getElementById('subject').value,
-      message: document.getElementById('message').value,
+      message: document.getElementById('message').value.trim(),
       timestamp: new Date().toISOString()
     };
     var messages = Utils.getStorage('contact-messages', []);

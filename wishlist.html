@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Wishlist — Vibent</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/darkmode.css">
+  <link rel="stylesheet" href="css/responsive.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="css/animations.css" media="print" onload="this.media='all'">
+</head>
+<body>
+  <nav class="navbar" id="navbar">
+    <div class="navbar__inner">
+      <a href="index.html" class="navbar__brand"><span class="navbar__brand-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L3 14h9l-1 10 10-12h-9l1-10z"/></svg></span>Vibent</a>
+      <div class="navbar__links" id="navLinks">
+        <div class="navbar__links-header">
+          <a href="index.html" class="navbar__brand"><span class="navbar__brand-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L3 14h9l-1 10 10-12h-9l1-10z"/></svg></span>Vibent</a>
+          <button class="navbar__close" id="navClose" aria-label="Close menu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        </div>
+        <a href="events.html" class="navbar__link">Find Events</a>
+        <a href="how-it-works.html" class="navbar__link">How It Works</a>
+        <a href="pricing.html" class="navbar__link">Pricing</a>
+        <a href="about.html" class="navbar__link">About</a>
+      </div>
+      <div class="navbar__spacer"></div>
+      <div class="navbar__search"><input type="text" id="navSearchInput" placeholder="Search events" aria-label="Search events"><button class="navbar__search-btn" aria-label="Search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button></div>
+      <div class="navbar__actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode"><svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg><svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+        <a href="contact.html" class="btn btn--ghost">Contact Us</a>
+        <a href="login.html" class="btn btn--ghost">Log in</a>
+        <a href="register.html" class="btn btn--primary">Sign up</a>
+        <button class="navbar__hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="page-header">
+    <div class="container"><h1>My Wishlist</h1><p>Events you've saved for later</p></div>
+  </div>
+
+  <div class="container" style="padding-top:40px;padding-bottom:60px;">
+    <div id="wishlistContent">
+      <div style="text-align:center;padding:80px 24px;"><div class="loading-spinner"></div></div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+  <button class="back-to-top" id="backToTop" aria-label="Back to top"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg></button>
+  <script src="js/utils.js" defer></script>
+  <script src="js/darkmode.js" defer></script>
+  <script src="js/search.js" defer></script>
+  <script src="js/events.js" defer></script>
+  <script src="js/auth.js" defer></script>
+  <script src="js/booking.js" defer></script>
+  <script src="js/main.js" defer></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', async function() {
+    if (!Auth.guard()) return;
+    var container = document.getElementById('wishlistContent');
+    var allEvents = await Utils.fetchJSON('data/events.json');
+    Utils.setStorage('cachedEvents', allEvents);
+    var favorites = Utils.getStorage('favorites', []);
+    var favEvents = allEvents.filter(function(e) { return favorites.indexOf(e.id) !== -1; });
+
+    if (favEvents.length === 0) {
+      container.innerHTML =
+        '<div class="ev-empty">' +
+          '<svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>' +
+          '<h3>Your wishlist is empty</h3>' +
+          '<p>Save events you love by clicking the heart icon on any event card.</p>' +
+          '<a href="events.html" class="btn btn--primary">Browse Events</a>' +
+        '</div>';
+      return;
+    }
+
+    container.innerHTML =
+      '<p style="font-size:14px;color:var(--text-secondary);margin-bottom:24px;">' + favEvents.length + ' event' + (favEvents.length !== 1 ? 's' : '') + ' saved</p>' +
+      '<div class="events-grid" id="wishGrid"></div>';
+    Events.renderGrid('wishGrid', favEvents);
+  });
+  </script>
+</body>
+</html>

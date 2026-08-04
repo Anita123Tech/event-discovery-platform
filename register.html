@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Sign Up — Vibent</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/darkmode.css">
+  <link rel="stylesheet" href="css/responsive.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="css/animations.css" media="print" onload="this.media='all'">
+</head>
+<body>
+  <nav class="navbar" id="navbar">
+    <div class="navbar__inner">
+      <a href="index.html" class="navbar__brand"><span class="navbar__brand-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L3 14h9l-1 10 10-12h-9l1-10z"/></svg></span>Vibent</a>
+      <div class="navbar__links" id="navLinks">
+        <div class="navbar__links-header">
+          <a href="index.html" class="navbar__brand"><span class="navbar__brand-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L3 14h9l-1 10 10-12h-9l1-10z"/></svg></span>Vibent</a>
+          <button class="navbar__close" id="navClose" aria-label="Close menu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        </div>
+        <a href="events.html" class="navbar__link">Find Events</a>
+        <a href="how-it-works.html" class="navbar__link">How It Works</a>
+        <a href="pricing.html" class="navbar__link">Pricing</a>
+        <a href="about.html" class="navbar__link">About</a>
+      </div>
+      <div class="navbar__spacer"></div>
+      <div class="navbar__search"><input type="text" id="navSearchInput" placeholder="Search events" aria-label="Search events"><button class="navbar__search-btn" aria-label="Search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button></div>
+      <div class="navbar__actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode"><svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg><svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+        <a href="contact.html" class="btn btn--ghost">Contact Us</a>
+        <a href="login.html" class="btn btn--ghost">Log in</a>
+        <button class="navbar__hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="auth-page">
+    <div class="auth-page__visual">
+      <div class="auth-page__visual-content">
+        <div class="auth-page__brand"><span class="navbar__brand-icon" style="width:48px;height:48px;border-radius:12px;"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L3 14h9l-1 10 10-12h-9l1-10z"/></svg></span><span style="font-size:28px;font-weight:800;color:#fff;">Vibent</span></div>
+        <h2>Start your event journey today</h2>
+        <p>Join thousands of event enthusiasts. Create an account to book events, save favourites, and never miss out.</p>
+        <div class="auth-page__stats">
+          <div class="auth-page__stat"><span class="auth-page__stat-num">50K+</span><span class="auth-page__stat-label">Active Users</span></div>
+          <div class="auth-page__stat"><span class="auth-page__stat-num">12K+</span><span class="auth-page__stat-label">Events</span></div>
+          <div class="auth-page__stat"><span class="auth-page__stat-num">180+</span><span class="auth-page__stat-label">Cities</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="auth-page__form-side">
+      <div class="auth-form-wrapper">
+        <h1 class="auth-form__title">Create your account</h1>
+        <p class="auth-form__subtitle">Fill in the details below to get started</p>
+        <form id="registerForm" class="auth-form" novalidate>
+          <div class="form-row">
+            <div class="form-group" id="firstNameGroup"><label for="regFirstName">First name</label><input type="text" id="regFirstName" name="firstName" placeholder="John" autocomplete="given-name" required><span class="form-error" id="firstNameError"></span></div>
+            <div class="form-group" id="lastNameGroup"><label for="regLastName">Last name</label><input type="text" id="regLastName" name="lastName" placeholder="Doe" autocomplete="family-name" required><span class="form-error" id="lastNameError"></span></div>
+          </div>
+          <div class="form-group" id="regEmailGroup"><label for="regEmail">Email address</label><input type="email" id="regEmail" name="email" placeholder="you@example.com" autocomplete="email" required><span class="form-error" id="regEmailError"></span></div>
+          <div class="form-group" id="regPhoneGroup"><label for="regPhone">Phone number <span style="font-weight:400;color:var(--text-muted);">(optional)</span></label><input type="tel" id="regPhone" name="phone" placeholder="+1 (555) 123-4567" autocomplete="tel"><span class="form-error" id="regPhoneError"></span></div>
+          <div class="form-group" id="regPasswordGroup"><label for="regPassword">Password</label>
+            <div class="form-input-group"><input type="password" id="regPassword" name="password" placeholder="At least 6 characters" autocomplete="new-password" required><button type="button" class="form-input-group__toggle" id="toggleRegPassword" aria-label="Show password"><svg class="eye-open" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><svg class="eye-closed" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg></button></div>
+            <span class="form-error" id="regPasswordError"></span>
+          </div>
+          <div class="form-group" id="regConfirmGroup"><label for="regConfirm">Confirm password</label><input type="password" id="regConfirm" name="confirmPassword" placeholder="Re-enter your password" autocomplete="new-password" required><span class="form-error" id="regConfirmError"></span></div>
+          <div class="form-check"><input type="checkbox" id="agreeTerms" required><label for="agreeTerms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label><span class="form-error" id="termsError"></span></div>
+          <button type="submit" class="btn btn--primary btn--lg" style="width:100%;margin-top:8px;" id="registerSubmit">Create account</button>
+        </form>
+        <div class="auth-form__divider"><span>or</span></div>
+        <p class="auth-form__switch">Already have an account? <a href="login.html">Log in</a></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+  <script src="js/utils.js" defer></script>
+  <script src="js/darkmode.js" defer></script>
+  <script src="js/search.js" defer></script>
+  <script src="js/events.js" defer></script>
+  <script src="js/auth.js" defer></script>
+  <script src="js/main.js" defer></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    if (Auth.isLoggedIn()) { window.location.href = 'index.html'; return; }
+    var form = document.getElementById('registerForm');
+    function clearAllErrors() {
+      document.querySelectorAll('.form-group--error').forEach(function(el) { el.classList.remove('form-group--error'); });
+      document.querySelectorAll('.form-error').forEach(function(el) { el.textContent = ''; });
+    }
+    function showErr(id, msg) { var e = document.getElementById(id); if (e) e.textContent = msg; var g = document.getElementById(id.replace('Error','Group')); if (g) g.classList.add('form-group--error'); }
+    document.getElementById('toggleRegPassword').addEventListener('click', function() {
+      var pw = document.getElementById('regPassword'); var isP = pw.type === 'password';
+      pw.type = isP ? 'text' : 'password';
+      this.querySelector('.eye-open').style.display = isP ? 'none' : 'block';
+      this.querySelector('.eye-closed').style.display = isP ? 'block' : 'none';
+    });
+    form.addEventListener('submit', function(e) {
+      e.preventDefault(); clearAllErrors();
+      if (!document.getElementById('agreeTerms').checked) { document.getElementById('termsError').textContent = 'You must agree to the terms'; return; }
+      var result = Auth.register({
+        firstName: document.getElementById('regFirstName').value,
+        lastName: document.getElementById('regLastName').value,
+        email: document.getElementById('regEmail').value,
+        phone: document.getElementById('regPhone').value,
+        password: document.getElementById('regPassword').value,
+        confirmPassword: document.getElementById('regConfirm').value
+      });
+      if (!result.success) {
+        var m = {firstName:'firstNameError',lastName:'lastNameError',email:'regEmailError',phone:'regPhoneError',password:'regPasswordError',confirmPassword:'regConfirmError'};
+        Object.keys(result.errors).forEach(function(k){ if(m[k]) showErr(m[k], result.errors[k]); });
+        return;
+      }
+      var btn = document.getElementById('registerSubmit'); btn.textContent = 'Creating account...'; btn.disabled = true;
+      Utils.showToast('Account created! Welcome, ' + result.user.firstName + '!', 'success');
+      var redir = new URLSearchParams(window.location.search).get('redirect');
+      setTimeout(function() { window.location.href = redir || 'index.html'; }, 600);
+    });
+  });
+  </script>
+</body>
+</html>

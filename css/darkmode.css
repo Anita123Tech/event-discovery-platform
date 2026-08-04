@@ -62,3 +62,35 @@
 [data-theme="dark"] .ev-card__save { background: rgba(28,28,36,0.9); }
 [data-theme="dark"] .ev-load-more { background: var(--bg); border-color: var(--border); color: var(--text); }
 [data-theme="dark"] .ev-load-more:hover { border-color: var(--primary); color: var(--primary); }
+
+/* Dark mode: Auth pages */
+[data-theme="dark"] .auth-page__form-side { background: var(--bg); }
+[data-theme="dark"] .form-input-group__toggle { color: var(--text-muted); }
+[data-theme="dark"] .ticket-option { background: var(--bg); border-color: var(--border); }
+[data-theme="dark"] .ticket-option:has(input:checked) { background: var(--primary-light); border-color: var(--primary); }
+
+/* Dark mode: Profile */
+[data-theme="dark"] .profile-card { background: var(--bg); border-color: var(--border); }
+[data-theme="dark"] .profile-nav { background: var(--bg); border-color: var(--border); }
+[data-theme="dark"] .profile-section { background: var(--bg); border-color: var(--border); }
+[data-theme="dark"] .profile-card__stats { background: var(--border); }
+[data-theme="dark"] .profile-stat { background: var(--bg); }
+
+/* Dark mode: Navbar dropdown */
+[data-theme="dark"] .navbar__dropdown { background: var(--bg-white); border-color: var(--border); }
+[data-theme="dark"] .navbar__dropdown-header { border-color: var(--border); }
+[data-theme="dark"] .navbar__dropdown-divider { background: var(--border); }
+
+/* Dark mode: Booking modal */
+[data-theme="dark"] .modal { background: var(--bg-white); }
+[data-theme="dark"] .modal__header { border-color: var(--border); }
+[data-theme="dark"] .booking-summary { background: var(--bg); border-color: var(--border); }
+[data-theme="dark"] .qty-selector { border-color: var(--border); }
+[data-theme="dark"] .qty-btn { background: var(--bg); color: var(--text); }
+[data-theme="dark"] .qty-selector input { background: var(--bg-white); color: var(--text); }
+
+/* Dark mode: Bookings page */
+[data-theme="dark"] .booking-stat-card { background: var(--bg); border-color: var(--border); }
+[data-theme="dark"] .booking-card { background: var(--bg); border-color: var(--border); }
+[data-theme="dark"] .booking-card__footer { border-color: var(--border); }
+[data-theme="dark"] .bookings-tabs { border-color: var(--border); }
