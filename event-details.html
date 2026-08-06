@@ -40,8 +40,9 @@
           <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
           <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
         </button>
-        <a href="contact.html" class="btn btn--ghost" style="font-size:14px;">Contact Us</a>
-        <a href="pricing.html" class="btn btn--primary" style="font-size:14px;">Sign up</a>
+        <a href="contact.html" class="btn btn--ghost">Contact Us</a>
+        <a href="login.html" class="btn btn--ghost">Log in</a>
+        <a href="register.html" class="btn btn--primary">Sign up</a>
         <button class="navbar__hamburger" id="hamburger" aria-label="Menu">
           <span></span><span></span><span></span>
         </button>
@@ -163,6 +164,37 @@
     </div>
   </footer>
 
+  <!-- Booking Modal -->
+  <div class="modal-overlay" id="bookingModal">
+    <div class="modal">
+      <div class="modal__header">
+        <h2 class="modal__title">Book Tickets</h2>
+        <button class="modal__close" id="modalClose" aria-label="Close"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+      </div>
+      <div class="modal__body" id="modalBody">
+        <div class="modal-event-info" id="modalEventInfo"></div>
+        <form id="bookingForm" novalidate>
+          <div class="form-group"><label>Ticket Type</label>
+            <div class="ticket-options" id="ticketOptions">
+              <label class="ticket-option"><input type="radio" name="ticketType" value="general" checked><div class="ticket-option__content"><span class="ticket-option__name">General Admission</span><span class="ticket-option__price" id="generalPrice"></span></div></label>
+              <label class="ticket-option"><input type="radio" name="ticketType" value="vip"><div class="ticket-option__content"><span class="ticket-option__name">VIP Access</span><span class="ticket-option__price" id="vipPrice"></span></div></label>
+              <label class="ticket-option"><input type="radio" name="ticketType" value="premium"><div class="ticket-option__content"><span class="ticket-option__name">Premium Experience</span><span class="ticket-option__price" id="premiumPrice"></span></div></label>
+            </div>
+          </div>
+          <div class="form-group"><label for="ticketQty">Number of Tickets</label>
+            <div class="qty-selector">
+              <button type="button" class="qty-btn" id="qtyMinus">-</button>
+              <input type="number" id="ticketQty" value="1" min="1" max="10" readonly>
+              <button type="button" class="qty-btn" id="qtyPlus">+</button>
+            </div>
+          </div>
+          <div class="booking-summary" id="bookingSummary"></div>
+          <button type="submit" class="btn btn--primary btn--lg" style="width:100%;" id="confirmBookingBtn">Confirm Booking</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <div class="toast-container" id="toastContainer"></div>
   <button class="back-to-top" id="backToTop" aria-label="Back to top">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
@@ -171,6 +203,8 @@
   <script src="js/darkmode.js" defer></script>
   <script src="js/search.js" defer></script>
   <script src="js/events.js" defer></script>
+  <script src="js/auth.js" defer></script>
+  <script src="js/booking.js" defer></script>
   <script src="js/main.js" defer></script>
 
   <script>
@@ -178,6 +212,7 @@
     var container = document.getElementById('eventContent');
     var relatedGrid = document.getElementById('relatedGrid');
     var allEvents = await Utils.fetchJSON('data/events.json');
+    Utils.setStorage('cachedEvents', allEvents);
     var params = new URLSearchParams(window.location.search);
     var eventId = params.get('id');
     var event = null;
@@ -204,6 +239,7 @@
     var saved = Events.isFav(event.id);
     var ticketsLeft = event.ticketsLeft || 0;
     var isLow = ticketsLeft < 50;
+    var alreadyBooked = Booking.isBooked(event.id);
 
     container.innerHTML =
       '<div style="margin-bottom:20px;">' +
@@ -251,7 +287,7 @@
         '</div>' +
         '<div class="event-detail__sidebar">' +
           '<div class="event-detail__price-tag">' + (event.price === 0 ? 'Free' : '$' + event.price) + '</div>' +
-          (isLow ? '<div class="tickets-left"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Only ' + ticketsLeft + ' tickets left!</div>' : '') +
+          (isLow ? '<div class="tickets-low"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Only ' + ticketsLeft + ' tickets left!</div>' : '') +
           '<div class="event-detail__info-list">' +
             '<div class="event-detail__info-item"><span>Date</span><span>' + Utils.formatDate(event.date) + '</span></div>' +
             '<div class="event-detail__info-item"><span>Time</span><span>' + Utils.formatTime(event.time) + '</span></div>' +
@@ -261,7 +297,7 @@
             '<div class="event-detail__info-item"><span>Attendees</span><span>' + event.attendees.toLocaleString() + '</span></div>' +
           '</div>' +
           '<button class="btn btn--primary btn--lg ripple" style="width:100%;margin-bottom:12px;" id="bookBtn">' +
-            (event.price === 0 ? 'Register Free' : 'Book Now') +
+            (alreadyBooked ? '&#10003; Booked' : (event.price === 0 ? 'Register Free' : 'Book Now')) +
           '</button>' +
           '<button class="btn btn--outline btn--lg" style="width:100%;" id="favBtn">' +
             (saved ? '&#10084; Saved' : '&#9825; Save Event') +
@@ -269,8 +305,99 @@
         '</div>' +
       '</div>';
 
-    document.getElementById('bookBtn').addEventListener('click', function() {
-      Utils.showToast('Booking functionality coming soon!', 'info');
+    // Booking Modal Logic
+    var modal = document.getElementById('bookingModal');
+    var modalClose = document.getElementById('modalClose');
+    var bookingForm = document.getElementById('bookingForm');
+    var qtyInput = document.getElementById('ticketQty');
+
+    function openBookingModal() {
+      if (!Auth.isLoggedIn()) {
+        Utils.showToast('Please log in to book events', 'info');
+        window.location.href = 'login.html?redirect=' + encodeURIComponent(window.location.href);
+        return;
+      }
+      if (Booking.isBooked(event.id)) {
+        Utils.showToast('You have already booked this event', 'info');
+        return;
+      }
+
+      var price = event.price || 0;
+      document.getElementById('modalEventInfo').innerHTML =
+        '<div style="display:flex;gap:12px;margin-bottom:20px;">' +
+          '<img src="' + event.image + '" alt="" style="width:80px;height:60px;object-fit:cover;border-radius:var(--radius);flex-shrink:0;">' +
+          '<div><h3 style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:4px;">' + Utils.escapeHTML(event.title) + '</h3>' +
+          '<p style="font-size:13px;color:var(--text-secondary);">' + Utils.formatDate(event.date) + ' at ' + Utils.formatTime(event.time) + '</p></div>' +
+        '</div>';
+
+      document.getElementById('generalPrice').textContent = price === 0 ? 'Free' : '$' + price.toFixed(2);
+      document.getElementById('vipPrice').textContent = price === 0 ? 'Free' : '$' + (price * 1.5).toFixed(2);
+      document.getElementById('premiumPrice').textContent = price === 0 ? 'Free' : '$' + (price * 2).toFixed(2);
+
+      qtyInput.value = 1;
+      updateSummary();
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      modal.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function updateSummary() {
+      var type = bookingForm.ticketType.value;
+      var qty = parseInt(qtyInput.value) || 1;
+      var price = event.price || 0;
+      var unitPrice = type === 'vip' ? price * 1.5 : type === 'premium' ? price * 2 : price;
+      var total = unitPrice * qty;
+      document.getElementById('bookingSummary').innerHTML =
+        '<div class="booking-summary__row"><span>Ticket type</span><span>' + type.charAt(0).toUpperCase() + type.slice(1) + '</span></div>' +
+        '<div class="booking-summary__row"><span>Quantity</span><span>' + qty + '</span></div>' +
+        '<div class="booking-summary__row"><span>Price per ticket</span><span>' + (unitPrice === 0 ? 'Free' : '$' + unitPrice.toFixed(2)) + '</span></div>' +
+        '<div class="booking-summary__row booking-summary__total"><span>Total</span><span>' + (total === 0 ? 'Free' : '$' + total.toFixed(2)) + '</span></div>';
+    }
+
+    document.getElementById('bookBtn').addEventListener('click', openBookingModal);
+    modalClose.addEventListener('click', closeModal);
+    modal.addEventListener('click', function(e) { if (e.target === modal) closeModal(); });
+
+    document.getElementById('qtyMinus').addEventListener('click', function() {
+      var v = parseInt(qtyInput.value);
+      if (v > 1) { qtyInput.value = v - 1; updateSummary(); }
+    });
+    document.getElementById('qtyPlus').addEventListener('click', function() {
+      var v = parseInt(qtyInput.value);
+      if (v < 10) { qtyInput.value = v + 1; updateSummary(); }
+    });
+
+    bookingForm.querySelectorAll('input[name="ticketType"]').forEach(function(radio) {
+      radio.addEventListener('change', updateSummary);
+    });
+
+    bookingForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var type = bookingForm.ticketType.value;
+      var qty = parseInt(qtyInput.value) || 1;
+      var btn = document.getElementById('confirmBookingBtn');
+      btn.textContent = 'Processing...';
+      btn.disabled = true;
+
+      setTimeout(function() {
+        var result = Booking.create(event.id, type, qty);
+        if (result.success) {
+          closeModal();
+          Utils.showToast('Booking confirmed! ' + result.booking.id, 'success');
+          var bookBtn = document.getElementById('bookBtn');
+          bookBtn.innerHTML = '&#10003; Booked';
+          bookBtn.disabled = true;
+          bookBtn.style.opacity = '0.7';
+        } else {
+          Utils.showToast(result.error, 'error');
+        }
+        btn.textContent = 'Confirm Booking';
+        btn.disabled = false;
+      }, 800);
     });
 
     document.getElementById('favBtn').addEventListener('click', function() {

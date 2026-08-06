@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>My Bookings — Vibent</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/darkmode.css">
+  <link rel="stylesheet" href="css/responsive.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="css/animations.css" media="print" onload="this.media='all'">
+</head>
+<body>
+  <nav class="navbar" id="navbar">
+    <div class="navbar__inner">
+      <a href="index.html" class="navbar__brand"><span class="navbar__brand-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L3 14h9l-1 10 10-12h-9l1-10z"/></svg></span>Vibent</a>
+      <div class="navbar__links" id="navLinks">
+        <div class="navbar__links-header">
+          <a href="index.html" class="navbar__brand"><span class="navbar__brand-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L3 14h9l-1 10 10-12h-9l1-10z"/></svg></span>Vibent</a>
+          <button class="navbar__close" id="navClose" aria-label="Close menu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        </div>
+        <a href="events.html" class="navbar__link">Find Events</a>
+        <a href="how-it-works.html" class="navbar__link">How It Works</a>
+        <a href="pricing.html" class="navbar__link">Pricing</a>
+        <a href="about.html" class="navbar__link">About</a>
+      </div>
+      <div class="navbar__spacer"></div>
+      <div class="navbar__search"><input type="text" id="navSearchInput" placeholder="Search events" aria-label="Search events"><button class="navbar__search-btn" aria-label="Search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button></div>
+      <div class="navbar__actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode"><svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg><svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+        <a href="contact.html" class="btn btn--ghost">Contact Us</a>
+        <a href="login.html" class="btn btn--ghost">Log in</a>
+        <a href="register.html" class="btn btn--primary">Sign up</a>
+        <button class="navbar__hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="page-header">
+    <div class="container"><h1>My Bookings</h1><p>View and manage your event bookings</p></div>
+  </div>
+
+  <div class="container" style="padding-top:40px;padding-bottom:60px;">
+    <div class="bookings-stats" id="bookingStats"></div>
+    <div class="bookings-tabs">
+      <button class="bookings-tab active" data-filter="all">All</button>
+      <button class="bookings-tab" data-filter="confirmed">Confirmed</button>
+      <button class="bookings-tab" data-filter="cancelled">Cancelled</button>
+    </div>
+    <div id="bookingsContent">
+      <div style="text-align:center;padding:80px 24px;"><div class="loading-spinner"></div></div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+  <button class="back-to-top" id="backToTop" aria-label="Back to top"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg></button>
+  <script src="js/utils.js" defer></script>
+  <script src="js/darkmode.js" defer></script>
+  <script src="js/search.js" defer></script>
+  <script src="js/events.js" defer></script>
+  <script src="js/auth.js" defer></script>
+  <script src="js/booking.js" defer></script>
+  <script src="js/main.js" defer></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', async function() {
+    if (!Auth.guard()) return;
+    var allEvents = await Utils.fetchJSON('data/events.json');
+    Utils.setStorage('cachedEvents', allEvents);
+    var currentFilter = 'all';
+
+    function renderStats() {
+      var stats = Booking.getStats();
+      document.getElementById('bookingStats').innerHTML =
+        '<div class="booking-stat-card"><div class="booking-stat-card__icon" style="background:var(--primary-light);color:var(--primary);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div><div class="booking-stat-card__num">' + stats.total + '</div><div class="booking-stat-card__label">Total Bookings</div></div>' +
+        '<div class="booking-stat-card"><div class="booking-stat-card__icon" style="background:rgba(30,140,107,0.1);color:var(--accent);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div><div class="booking-stat-card__num">' + stats.confirmed + '</div><div class="booking-stat-card__label">Confirmed</div></div>' +
+        '<div class="booking-stat-card"><div class="booking-stat-card__icon" style="background:rgba(54,89,227,0.1);color:var(--secondary);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div class="booking-stat-card__num">$' + stats.totalSpent.toFixed(2) + '</div><div class="booking-stat-card__label">Total Spent</div></div>';
+    }
+
+    function renderBookings() {
+      var bookings = Booking.getUserBookings();
+      if (currentFilter !== 'all') {
+        bookings = bookings.filter(function(b) { return b.status === currentFilter; });
+      }
+      var container = document.getElementById('bookingsContent');
+      if (bookings.length === 0) {
+        var msg = currentFilter === 'all' ? 'You have no bookings yet.' : 'No ' + currentFilter + ' bookings.';
+        container.innerHTML =
+          '<div class="ev-empty">' +
+            '<svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>' +
+            '<h3>' + msg + '</h3>' +
+            '<p>Discover events and book your first experience!</p>' +
+            '<a href="events.html" class="btn btn--primary">Browse Events</a>' +
+          '</div>';
+        return;
+      }
+
+      bookings.sort(function(a,b){ return new Date(b.bookedAt) - new Date(a.bookedAt); });
+
+      container.innerHTML = '<div class="bookings-list">' + bookings.map(function(b) {
+        var statusClass = Booking.getStatusClass(b.status);
+        var isUpcoming = new Date(b.eventDate) >= new Date();
+        return '<div class="booking-card">' +
+          '<div class="booking-card__image"><img src="' + b.eventImage + '" alt="' + Utils.escapeHTML(b.eventTitle) + '" loading="lazy"></div>' +
+          '<div class="booking-card__content">' +
+            '<div class="booking-card__header">' +
+              '<div><h3 class="booking-card__title"><a href="event-details.html?id=' + b.eventId + '">' + Utils.escapeHTML(b.eventTitle) + '</a></h3>' +
+              '<span class="booking-card__id">Booking ' + b.id + '</span></div>' +
+              '<span class="booking-status ' + statusClass + '">' + b.status.charAt(0).toUpperCase() + b.status.slice(1) + '</span>' +
+            '</div>' +
+            '<div class="booking-card__details">' +
+              '<div class="booking-card__detail"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>' + Booking.formatDate(b.eventDate) + ' at ' + Booking.formatTime(b.eventTime) + '</div>' +
+              '<div class="booking-card__detail"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>' + Utils.escapeHTML(b.eventLocation) + '</div>' +
+              '<div class="booking-card__detail"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>' + b.ticketType.charAt(0).toUpperCase() + b.ticketType.slice(1) + ' x' + b.quantity + '</div>' +
+            '</div>' +
+            '<div class="booking-card__footer">' +
+              '<span class="booking-card__price">' + (b.totalPrice === 0 ? 'Free' : '$' + b.totalPrice.toFixed(2)) + '</span>' +
+              (b.status === 'confirmed' && isUpcoming ? '<button class="btn btn--ghost btn--sm booking-cancel-btn" data-id="' + b.id + '" style="color:#EF4444;">Cancel Booking</button>' : '') +
+            '</div>' +
+          '</div>' +
+        '</div>';
+      }).join('') + '</div>';
+
+      container.querySelectorAll('.booking-cancel-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var id = btn.dataset.id;
+          if (confirm('Are you sure you want to cancel this booking?')) {
+            var result = Booking.cancel(id);
+            if (result.success) {
+              Utils.showToast('Booking cancelled', 'info');
+              renderStats();
+              renderBookings();
+            } else {
+              Utils.showToast(result.error, 'error');
+            }
+          }
+        });
+      });
+    }
+
+    document.querySelectorAll('.bookings-tab').forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        document.querySelectorAll('.bookings-tab').forEach(function(t){t.classList.remove('active');});
+        tab.classList.add('active');
+        currentFilter = tab.dataset.filter;
+        renderBookings();
+      });
+    });
+
+    renderStats();
+    renderBookings();
+  });
+  </script>
+</body>
+</html>

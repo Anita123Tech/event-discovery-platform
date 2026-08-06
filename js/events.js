@@ -4,6 +4,7 @@ var Events = {
   init: async function() {
     this.favorites = Utils.getStorage('favorites', []);
     this.all = await Utils.fetchJSON('data/events.json');
+    Utils.setStorage('cachedEvents', this.all);
     return this.all;
   },
   getFeatured: function(n) { return this.all.filter(function(e){return e.featured;}).slice(0, n||6); },
