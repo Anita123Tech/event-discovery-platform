@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
+  <script>
+  (function(){try{var t=JSON.parse(localStorage.getItem('ep-theme'));if(!t&&window.matchMedia)t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t||'light')}catch(e){}})();
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="Discover concerts, tech talks, food festivals and more on Vibent. Find and book events near you.">
@@ -407,18 +410,19 @@
         var shortDate = new Date(ev.date + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
         var dayName = new Date(ev.date + 'T00:00:00').toLocaleDateString('en-US', { weekday: 'short' });
         var priceText = ev.price === 0 ? 'Free' : 'From $' + ev.price.toFixed(2);
+        var saved = Events.isFav(ev.id);
         return '<article class="eb-card">' +
           '<a href="event-details.html?id=' + ev.id + '" class="eb-card__img">' +
-            '<img src="' + ev.image + '" alt="' + ev.title + '" loading="lazy">' +
-            '<button class="eb-card__save" aria-label="Save event">&#9825;</button>' +
+            '<img src="' + ev.image + '" alt="' + Utils.escapeHTML(ev.title) + '" loading="lazy">' +
+            '<button class="eb-card__save ' + (saved ? 'saved' : '') + '" data-id="' + ev.id + '" aria-label="Save event">' + (saved ? '&#9829;' : '&#9825;') + '</button>' +
             (ev.featured ? '<span class="eb-card__badge">Featured</span>' : '') +
           '</a>' +
           '<div class="eb-card__body">' +
             '<div class="eb-card__date">' + dayName + ', ' + shortDate + '</div>' +
-            '<h3 class="eb-card__title"><a href="event-details.html?id=' + ev.id + '">' + ev.title + '</a></h3>' +
+            '<h3 class="eb-card__title"><a href="event-details.html?id=' + ev.id + '">' + Utils.escapeHTML(ev.title) + '</a></h3>' +
             '<div class="eb-card__location">' +
               '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>' +
-              ev.location +
+              Utils.escapeHTML(ev.location) +
             '</div>' +
             '<div class="eb-card__footer">' +
               '<span class="eb-card__price">' + priceText + '</span>' +
@@ -435,6 +439,16 @@
         tab.classList.add('active');
         renderEvents(tab.dataset.filter);
       });
+    });
+
+    grid.addEventListener('click', function(e) {
+      var btn = e.target.closest('.eb-card__save');
+      if (!btn) return;
+      e.preventDefault();
+      e.stopPropagation();
+      var saved = Events.toggleFav(parseInt(btn.dataset.id));
+      btn.classList.toggle('saved', saved);
+      btn.innerHTML = saved ? '&#9829;' : '&#9825;';
     });
 
     loadEvents();

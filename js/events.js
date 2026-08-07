@@ -2,10 +2,20 @@ var Events = {
   all: [],
   favorites: [],
   init: async function() {
-    this.favorites = Utils.getStorage('favorites', []);
+    this.favorites = this.getFavorites();
     this.all = await Utils.fetchJSON('data/events.json');
     Utils.setStorage('cachedEvents', this.all);
     return this.all;
+  },
+  favoritesKey: function() {
+    var uid = (typeof Auth !== 'undefined' && Auth.isLoggedIn()) ? Auth.currentUser.id : null;
+    return uid ? 'favorites-' + uid : 'favorites';
+  },
+  getFavorites: function() {
+    return Utils.getStorage(this.favoritesKey(), []);
+  },
+  saveFavorites: function(arr) {
+    Utils.setStorage(this.favoritesKey(), arr);
   },
   getFeatured: function(n) { return this.all.filter(function(e){return e.featured;}).slice(0, n||6); },
   getUpcoming: function(n) {
@@ -28,13 +38,15 @@ var Events = {
     });
   },
   toggleFav: function(id) {
-    var i = this.favorites.indexOf(id);
-    if (i === -1) { this.favorites.push(id); Utils.showToast('Saved to favorites!', 'success'); }
-    else { this.favorites.splice(i, 1); Utils.showToast('Removed from favorites', 'info'); }
-    Utils.setStorage('favorites', this.favorites);
-    return this.favorites.indexOf(id) !== -1;
+    var arr = this.getFavorites();
+    var i = arr.indexOf(id);
+    if (i === -1) { arr.push(id); Utils.showToast('Saved to favorites!', 'success'); }
+    else { arr.splice(i, 1); Utils.showToast('Removed from favorites', 'info'); }
+    this.saveFavorites(arr);
+    this.favorites = arr;
+    return arr.indexOf(id) !== -1;
   },
-  isFav: function(id) { return this.favorites.indexOf(id) !== -1; },
+  isFav: function(id) { return this.getFavorites().indexOf(id) !== -1; },
   cardHTML: function(ev) {
     var saved = this.isFav(ev.id);
     var price = ev.price === 0 ? '<span class="event-card__price event-card__price--free">Free</span>' : '<span class="event-card__price">' + Utils.formatPrice(ev.price) + '</span>';

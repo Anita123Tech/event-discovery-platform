@@ -71,12 +71,15 @@ var App = {
       e.preventDefault();
       var input = form.querySelector('input');
       var email = input.value.trim();
-      if (email) {
-        var subs = Utils.getStorage('subs', []);
-        if (subs.indexOf(email) === -1) { subs.push(email); Utils.setStorage('subs', subs); Utils.showToast('Subscribed successfully!', 'success'); }
-        else Utils.showToast('Already subscribed!', 'info');
-        input.value = '';
+      if (!Utils.isValidEmail(email)) {
+        Utils.showToast('Please enter a valid email address', 'error');
+        input.focus();
+        return;
       }
+      var subs = Utils.getStorage('subs', []);
+      if (subs.indexOf(email) === -1) { subs.push(email); Utils.setStorage('subs', subs); Utils.showToast('Subscribed successfully!', 'success'); }
+      else Utils.showToast('Already subscribed!', 'info');
+      input.value = '';
     });
   },
   renderHome: function(events) {

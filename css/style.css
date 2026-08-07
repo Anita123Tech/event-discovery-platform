@@ -641,20 +641,26 @@ input, textarea, select { font-family: inherit; }
 
 /* ---------- TOAST ---------- */
 .toast-container {
-  position: fixed; bottom: 24px; right: 24px; z-index: 9999;
+  position: fixed; bottom: 24px; left: 24px; z-index: 9999;
   display: flex; flex-direction: column; gap: 8px;
 }
 .toast {
   padding: 12px 20px; background: var(--bg-white); color: var(--text);
   border: 1px solid var(--border); border-radius: var(--radius);
   font-size: 14px; box-shadow: var(--shadow-lg);
-  transform: translateX(120%); opacity: 0; transition: all 0.35s;
+  transform: translateX(-120%); opacity: 0; transition: all 0.35s;
   display: flex; align-items: center; gap: 8px; max-width: 320px;
+  cursor: pointer;
 }
 .toast.show { transform: translateX(0); opacity: 1; }
 .toast--success { border-left: 3px solid var(--accent); }
 .toast--error { border-left: 3px solid #EF4444; }
 .toast--info { border-left: 3px solid var(--primary); }
+.toast__icon { display: flex; align-items: center; flex-shrink: 0; }
+.toast__msg { line-height: 1.4; }
+.toast--success .toast__icon { color: var(--accent); }
+.toast--error .toast__icon { color: #EF4444; }
+.toast--info .toast__icon { color: var(--primary); }
 
 /* ---------- BACK TO TOP ---------- */
 .back-to-top {
@@ -1159,6 +1165,7 @@ input, textarea, select { font-family: inherit; }
 .form-check { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 16px; font-size: 13px; color: var(--text-secondary); }
 .form-check input[type="checkbox"] { width: 16px; height: 16px; margin-top: 2px; accent-color: var(--primary); flex-shrink: 0; }
 .form-check a { color: var(--primary); font-weight: 500; }
+.form-check.form-group--error label { color: #EF4444; }
 
 /* ============================================
    NAVBAR USER DROPDOWN

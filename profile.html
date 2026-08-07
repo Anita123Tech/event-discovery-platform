@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
+  <script>
+  (function(){try{var t=JSON.parse(localStorage.getItem('ep-theme'));if(!t&&window.matchMedia)t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t||'light')}catch(e){}})();
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>My Profile — Vibent</title>
@@ -133,10 +136,10 @@
     document.getElementById('profLastName').value = user.lastName;
     document.getElementById('profEmail').value = user.email;
     document.getElementById('profPhone').value = user.phone || '';
-    var favs = Utils.getStorage('favorites', []);
+    var favs = Events.getFavorites();
     document.getElementById('favCount').textContent = favs.length;
     var stats = Booking.getStats();
-    document.getElementById('bookingCount').textContent = stats.confirmed;
+    document.getElementById('bookingCount').textContent = stats.total;
 
     document.getElementById('profileForm').addEventListener('submit', function(e) {
       e.preventDefault();
@@ -158,6 +161,7 @@
       }
       document.getElementById('profileAvatar').innerHTML = Auth.getInitials();
       document.getElementById('profileName').textContent = Auth.getFullName();
+      Auth.updateNavbar();
       Utils.showToast('Profile updated successfully', 'success');
     });
 

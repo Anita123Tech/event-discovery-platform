@@ -41,8 +41,8 @@ var Booking = {
       return { success: false, error: 'Please log in to book events' };
     }
 
-    quantity = parseInt(quantity) || 1;
-    if (quantity < 1 || quantity > 10) {
+    quantity = parseInt(quantity, 10);
+    if (isNaN(quantity) || quantity < 1 || quantity > 10) {
       return { success: false, error: 'Quantity must be between 1 and 10' };
     }
 

@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
+  <script>
+  (function(){try{var t=JSON.parse(localStorage.getItem('ep-theme'));if(!t&&window.matchMedia)t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t||'light')}catch(e){}})();
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>My Bookings — Vibent</title>
@@ -57,6 +60,23 @@
 
   <div class="toast-container" id="toastContainer"></div>
   <button class="back-to-top" id="backToTop" aria-label="Back to top"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg></button>
+
+  <div class="modal-overlay" id="cancelModal">
+    <div class="modal" style="max-width:420px;" role="dialog" aria-modal="true" aria-labelledby="cancelModalTitle">
+      <div class="modal__header">
+        <h2 class="modal__title" id="cancelModalTitle">Cancel Booking?</h2>
+        <button class="modal__close" id="cancelModalClose" aria-label="Close"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+      </div>
+      <div class="modal__body">
+        <p style="font-size:14px;color:var(--text-secondary);line-height:1.6;margin:0;">Are you sure you want to cancel this booking? This action cannot be undone.</p>
+        <div style="display:flex;justify-content:flex-end;gap:12px;margin-top:24px;">
+          <button class="btn btn--ghost" id="cancelKeepBtn">Keep Booking</button>
+          <button class="btn" id="cancelConfirmBtn" style="background:#EF4444;color:#fff;">Yes, Cancel Booking</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="js/utils.js" defer></script>
   <script src="js/darkmode.js" defer></script>
   <script src="js/search.js" defer></script>
@@ -78,6 +98,37 @@
         '<div class="booking-stat-card"><div class="booking-stat-card__icon" style="background:rgba(30,140,107,0.1);color:var(--accent);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div><div class="booking-stat-card__num">' + stats.confirmed + '</div><div class="booking-stat-card__label">Confirmed</div></div>' +
         '<div class="booking-stat-card"><div class="booking-stat-card__icon" style="background:rgba(54,89,227,0.1);color:var(--secondary);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div class="booking-stat-card__num">$' + stats.totalSpent.toFixed(2) + '</div><div class="booking-stat-card__label">Total Spent</div></div>';
     }
+
+    var cancelModal = document.getElementById('cancelModal');
+    var pendingCancelId = null;
+
+    function openCancelModal() {
+      cancelModal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeCancelModal() {
+      cancelModal.classList.remove('open');
+      pendingCancelId = null;
+      document.body.style.overflow = '';
+    }
+    document.getElementById('cancelModalClose').addEventListener('click', closeCancelModal);
+    document.getElementById('cancelKeepBtn').addEventListener('click', closeCancelModal);
+    cancelModal.addEventListener('click', function(e) { if (e.target === cancelModal) closeCancelModal(); });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && cancelModal.classList.contains('open')) closeCancelModal();
+    });
+    document.getElementById('cancelConfirmBtn').addEventListener('click', function() {
+      if (!pendingCancelId) return;
+      var result = Booking.cancel(pendingCancelId);
+      closeCancelModal();
+      if (result.success) {
+        Utils.showToast('Booking cancelled', 'info');
+        renderStats();
+        renderBookings();
+      } else {
+        Utils.showToast(result.error, 'error');
+      }
+    });
 
     function renderBookings() {
       var bookings = Booking.getUserBookings();
@@ -101,7 +152,7 @@
 
       container.innerHTML = '<div class="bookings-list">' + bookings.map(function(b) {
         var statusClass = Booking.getStatusClass(b.status);
-        var isUpcoming = new Date(b.eventDate) >= new Date();
+        var isUpcoming = b.eventDate >= new Date().toISOString().split('T')[0];
         return '<div class="booking-card">' +
           '<div class="booking-card__image"><img src="' + b.eventImage + '" alt="' + Utils.escapeHTML(b.eventTitle) + '" loading="lazy"></div>' +
           '<div class="booking-card__content">' +
@@ -125,17 +176,8 @@
 
       container.querySelectorAll('.booking-cancel-btn').forEach(function(btn) {
         btn.addEventListener('click', function() {
-          var id = btn.dataset.id;
-          if (confirm('Are you sure you want to cancel this booking?')) {
-            var result = Booking.cancel(id);
-            if (result.success) {
-              Utils.showToast('Booking cancelled', 'info');
-              renderStats();
-              renderBookings();
-            } else {
-              Utils.showToast(result.error, 'error');
-            }
-          }
+          pendingCancelId = btn.dataset.id;
+          openCancelModal();
         });
       });
     }
