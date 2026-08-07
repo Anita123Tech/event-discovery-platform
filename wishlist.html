@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
+  <script>
+  (function(){try{var t=JSON.parse(localStorage.getItem('ep-theme'));if(!t&&window.matchMedia)t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t||'light')}catch(e){}})();
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Wishlist — Vibent</title>
@@ -64,24 +67,35 @@
     var container = document.getElementById('wishlistContent');
     var allEvents = await Utils.fetchJSON('data/events.json');
     Utils.setStorage('cachedEvents', allEvents);
-    var favorites = Utils.getStorage('favorites', []);
-    var favEvents = allEvents.filter(function(e) { return favorites.indexOf(e.id) !== -1; });
 
-    if (favEvents.length === 0) {
+    function renderWishlist() {
+      var favorites = Events.getFavorites();
+      var favEvents = allEvents.filter(function(e) { return favorites.indexOf(e.id) !== -1; });
+
+      if (favEvents.length === 0) {
+        container.innerHTML =
+          '<div class="ev-empty">' +
+            '<svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>' +
+            '<h3>Your wishlist is empty</h3>' +
+            '<p>Save events you love by clicking the heart icon on any event card.</p>' +
+            '<a href="events.html" class="btn btn--primary">Browse Events</a>' +
+          '</div>';
+        return;
+      }
+
       container.innerHTML =
-        '<div class="ev-empty">' +
-          '<svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>' +
-          '<h3>Your wishlist is empty</h3>' +
-          '<p>Save events you love by clicking the heart icon on any event card.</p>' +
-          '<a href="events.html" class="btn btn--primary">Browse Events</a>' +
-        '</div>';
-      return;
+        '<p style="font-size:14px;color:var(--text-secondary);margin-bottom:24px;">' + favEvents.length + ' event' + (favEvents.length !== 1 ? 's' : '') + ' saved</p>' +
+        '<div class="events-grid" id="wishGrid"></div>';
+      Events.renderGrid('wishGrid', favEvents);
+      var grid = document.getElementById('wishGrid');
+      grid.querySelectorAll('.event-card__save').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          if (!Events.isFav(parseInt(btn.dataset.id))) renderWishlist();
+        });
+      });
     }
 
-    container.innerHTML =
-      '<p style="font-size:14px;color:var(--text-secondary);margin-bottom:24px;">' + favEvents.length + ' event' + (favEvents.length !== 1 ? 's' : '') + ' saved</p>' +
-      '<div class="events-grid" id="wishGrid"></div>';
-    Events.renderGrid('wishGrid', favEvents);
+    renderWishlist();
   });
   </script>
 </body>

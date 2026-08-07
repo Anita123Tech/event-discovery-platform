@@ -19,6 +19,10 @@ var Auth = {
   },
 
   hashPassword: function(pw) {
+    return Utils.hashString((pw || '') + '::vibent::salt');
+  },
+
+  legacyHash: function(pw) {
     var hash = 0;
     for (var i = 0; i < pw.length; i++) {
       var ch = pw.charCodeAt(i);
@@ -26,6 +30,12 @@ var Auth = {
       hash |= 0;
     }
     return 'h_' + Math.abs(hash).toString(36);
+  },
+
+  verifyPassword: function(input, storedHash) {
+    if (!storedHash) return false;
+    if (storedHash.indexOf('s1_') === 0) return this.hashPassword(input) === storedHash;
+    return this.legacyHash(input) === storedHash;
   },
 
   validateEmail: function(email) {
@@ -55,6 +65,19 @@ var Auth = {
     return null;
   },
 
+  mergeFavorites: function(userId) {
+    var userKey = 'favorites-' + userId;
+    var guest = Utils.getStorage('favorites', []) || [];
+    if (!guest.length) return;
+    var merged = Utils.getStorage(userKey, []) || [];
+    guest.forEach(function(id) {
+      if (merged.indexOf(id) === -1) merged.push(id);
+    });
+    Utils.setStorage(userKey, merged);
+    Utils.removeStorage('favorites');
+    Utils.removeStorage('favorites_guest');
+  },
+
   register: function(data) {
     var errors = {};
     var nameErr = this.validateName(data.firstName, 'First name');
@@ -68,7 +91,7 @@ var Auth = {
     var phoneErr = this.validatePhone(data.phone);
     if (phoneErr) errors.phone = phoneErr;
 
-    if (data.password !== data.confirmPassword) {
+    if (data.confirmPassword !== undefined && data.password !== data.confirmPassword) {
       errors.confirmPassword = 'Passwords do not match';
     }
 
@@ -100,6 +123,7 @@ var Auth = {
     var session = { id: user.id, firstName: user.firstName, lastName: user.lastName, email: user.email, phone: user.phone, createdAt: user.createdAt };
     this.currentUser = session;
     Utils.setStorage('user', session);
+    this.mergeFavorites(user.id);
 
     return { success: true, user: session };
   },
@@ -116,18 +140,18 @@ var Auth = {
     }
 
     var users = this.getUsers();
-    var hashed = this.hashPassword(password);
     var user = users.find(function(u) {
-      return u.email.toLowerCase() === email.trim().toLowerCase() && u.password === hashed;
+      return u.email.toLowerCase() === email.trim().toLowerCase();
     });
 
-    if (!user) {
+    if (!user || !Auth.verifyPassword(password, user.password)) {
       return { success: false, errors: { email: 'Invalid email or password' } };
     }
 
     var session = { id: user.id, firstName: user.firstName, lastName: user.lastName, email: user.email, phone: user.phone, createdAt: user.createdAt };
     this.currentUser = session;
     Utils.setStorage('user', session);
+    this.mergeFavorites(user.id);
 
     return { success: true, user: session };
   },
@@ -215,7 +239,7 @@ var Auth = {
     var user = users.find(function(u) { return u.id === Auth.currentUser.id; });
     if (!user) return { success: false, errors: { currentPassword: 'User not found' } };
 
-    if (user.password !== this.hashPassword(currentPw)) {
+    if (!Auth.verifyPassword(currentPw, user.password)) {
       return { success: false, errors: { currentPassword: 'Current password is incorrect' } };
     }
 

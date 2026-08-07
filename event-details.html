@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
+  <script>
+  (function(){try{var t=JSON.parse(localStorage.getItem('ep-theme'));if(!t&&window.matchMedia)t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t||'light')}catch(e){}})();
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="View event details, ticket pricing, and booking information on Vibent.">
@@ -240,6 +243,8 @@
     var ticketsLeft = event.ticketsLeft || 0;
     var isLow = ticketsLeft < 50;
     var alreadyBooked = Booking.isBooked(event.id);
+    var todayStr = new Date().toISOString().split('T')[0];
+    var isPast = event.date < todayStr;
 
     container.innerHTML =
       '<div style="margin-bottom:20px;">' +
@@ -296,8 +301,10 @@
             '<div class="event-detail__info-item"><span>Organizer</span><span>' + Utils.escapeHTML(event.organizer) + '</span></div>' +
             '<div class="event-detail__info-item"><span>Attendees</span><span>' + event.attendees.toLocaleString() + '</span></div>' +
           '</div>' +
-          '<button class="btn btn--primary btn--lg ripple" style="width:100%;margin-bottom:12px;" id="bookBtn">' +
-            (alreadyBooked ? '&#10003; Booked' : (event.price === 0 ? 'Register Free' : 'Book Now')) +
+          '<button class="btn btn--primary btn--lg ripple" id="bookBtn" style="width:100%;margin-bottom:12px;' +
+            (isPast ? 'opacity:0.6;cursor:not-allowed;' : (alreadyBooked ? 'opacity:0.7;' : '')) + '" ' +
+            (isPast || alreadyBooked ? 'disabled' : '') + '>' +
+            (isPast ? 'Event Ended' : (alreadyBooked ? '&#10003; Booked' : (event.price === 0 ? 'Register Free' : 'Book Now'))) +
           '</button>' +
           '<button class="btn btn--outline btn--lg" style="width:100%;" id="favBtn">' +
             (saved ? '&#10084; Saved' : '&#9825; Save Event') +
@@ -315,6 +322,10 @@
       if (!Auth.isLoggedIn()) {
         Utils.showToast('Please log in to book events', 'info');
         window.location.href = 'login.html?redirect=' + encodeURIComponent(window.location.href);
+        return;
+      }
+      if (isPast) {
+        Utils.showToast('This event has already ended', 'info');
         return;
       }
       if (Booking.isBooked(event.id)) {
@@ -349,7 +360,7 @@
       var type = bookingForm.ticketType.value;
       var qty = parseInt(qtyInput.value) || 1;
       var price = event.price || 0;
-      var unitPrice = type === 'vip' ? price * 1.5 : type === 'premium' ? price * 2 : price;
+      var unitPrice = type === 'vip' ? Math.round(price * 1.5) : type === 'premium' ? Math.round(price * 2) : price;
       var total = unitPrice * qty;
       document.getElementById('bookingSummary').innerHTML =
         '<div class="booking-summary__row"><span>Ticket type</span><span>' + type.charAt(0).toUpperCase() + type.slice(1) + '</span></div>' +
@@ -361,6 +372,9 @@
     document.getElementById('bookBtn').addEventListener('click', openBookingModal);
     modalClose.addEventListener('click', closeModal);
     modal.addEventListener('click', function(e) { if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+    });
 
     document.getElementById('qtyMinus').addEventListener('click', function() {
       var v = parseInt(qtyInput.value);

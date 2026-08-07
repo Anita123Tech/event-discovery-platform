@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
+  <script>
+  (function(){try{var t=JSON.parse(localStorage.getItem('ep-theme'));if(!t&&window.matchMedia)t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t||'light')}catch(e){}})();
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="Log in to your Vibent account to book events, manage bookings, and more.">
@@ -196,7 +199,7 @@
       var params = new URLSearchParams(window.location.search);
       var redirect = params.get('redirect');
       setTimeout(function() {
-        window.location.href = redirect || 'index.html';
+        window.location.href = Utils.safeRedirect(redirect);
       }, 600);
     });
   });

@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
+  <script>
+  (function(){try{var t=JSON.parse(localStorage.getItem('ep-theme'));if(!t&&window.matchMedia)t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t||'light')}catch(e){}})();
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Sign Up — Vibent</title>
@@ -98,9 +101,35 @@
       this.querySelector('.eye-open').style.display = isP ? 'none' : 'block';
       this.querySelector('.eye-closed').style.display = isP ? 'block' : 'none';
     });
+    var fieldMap = {
+      regFirstName: ['firstNameError', 'firstNameGroup'],
+      regLastName: ['lastNameError', 'lastNameGroup'],
+      regEmail: ['regEmailError', 'regEmailGroup'],
+      regPhone: ['regPhoneError', 'regPhoneGroup'],
+      regPassword: ['regPasswordError', 'regPasswordGroup'],
+      regConfirm: ['regConfirmError', 'regConfirmGroup']
+    };
+    Object.keys(fieldMap).forEach(function(inputId) {
+      var el = document.getElementById(inputId);
+      if (!el) return;
+      el.addEventListener('input', function() {
+        var err = document.getElementById(fieldMap[inputId][0]);
+        var grp = document.getElementById(fieldMap[inputId][1]);
+        if (err) err.textContent = '';
+        if (grp) grp.classList.remove('form-group--error');
+      });
+    });
+    document.getElementById('agreeTerms').addEventListener('change', function() {
+      document.getElementById('termsError').textContent = '';
+      this.closest('.form-check').classList.remove('form-group--error');
+    });
     form.addEventListener('submit', function(e) {
       e.preventDefault(); clearAllErrors();
-      if (!document.getElementById('agreeTerms').checked) { document.getElementById('termsError').textContent = 'You must agree to the terms'; return; }
+      if (!document.getElementById('agreeTerms').checked) {
+        document.getElementById('termsError').textContent = 'You must agree to the terms';
+        document.getElementById('agreeTerms').closest('.form-check').classList.add('form-group--error');
+        return;
+      }
       var result = Auth.register({
         firstName: document.getElementById('regFirstName').value,
         lastName: document.getElementById('regLastName').value,
@@ -117,7 +146,7 @@
       var btn = document.getElementById('registerSubmit'); btn.textContent = 'Creating account...'; btn.disabled = true;
       Utils.showToast('Account created! Welcome, ' + result.user.firstName + '!', 'success');
       var redir = new URLSearchParams(window.location.search).get('redirect');
-      setTimeout(function() { window.location.href = redir || 'index.html'; }, 600);
+      setTimeout(function() { window.location.href = Utils.safeRedirect(redir); }, 600);
     });
   });
   </script>
